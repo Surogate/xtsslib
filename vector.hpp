@@ -313,10 +313,55 @@ namespace ts
 			return const_reverse_iterator(begin());
 		}
 
+		const_reverse_iterator crbegin() const
+		{
+			return const_reverse_iterator(begin());
+		}
+
+		reverse_iterator rend()
+		{
+			return reverse_iterator(end());
+		}
+
+		const_reverse_iterator rend() const
+		{
+			return const_reverse_iterator(end());
+		}
+
+		const_reverse_iterator crend() const
+		{
+			return const_reverse_iterator(end());
+		}
+
+		template <class InputIterator>
+		void assign(InputIterator first, InputIterator last)
+		{
+			std_lock_guard _(_mut);
+			_implem.assign(first, last);
+		}
+
+		void assign(size_type n, const T& item)
+		{
+			std_lock_guard _(_mut);
+			_implem.assign(n, item);
+		}
+
 		void push_back(const T& x)
 		{
 			std_lock_guard _(_mut);
 			_implem.push_back(x)
+		}
+
+		void pop_back()
+		{
+			std_lock_guard _(_mut);
+			_implem.pop_back();
+		}
+
+		iterator insert(iterator position, const T& x)
+		{
+			vector_implem::iterator it = _implem.begin();
+			it
 		}
 
 
