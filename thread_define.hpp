@@ -2,14 +2,15 @@
 #ifndef thread_define_h__
 #define thread_define_h__
 
-#include <boost/thread.hpp>
+#include <thread>
+#include <mutex>
+#include <memory>
 
 namespace ts 
 {
-	typedef boost::thread std_thread;
-	typedef boost::shared_mutex std_shared_mutex;
-	typedef boost::lock_guard<std_shared_mutex> std_lock_guard;
-	typedef boost::shared_lock<std_shared_mutex> std_shared_lock_guard;
+	typedef std::thread std_thread;
+	typedef std::mutex std_shared_mutex;
+	typedef std::lock_guard<std_shared_mutex> std_lock_guard;
 }
 
 
