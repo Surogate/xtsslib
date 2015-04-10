@@ -1,0 +1,1 @@
+Extend the standard container to be thread safe using the new C++11 mutex.
