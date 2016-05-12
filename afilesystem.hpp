@@ -22,6 +22,8 @@ namespace filesystem
    using std::experimental::filesystem::status;
    using std::experimental::filesystem::last_write_time;
    using std::experimental::filesystem::file_size;
+   using std::experimental::filesystem::create_directory;
+   using std::experimental::filesystem::create_directories;
 }
 }
 
@@ -113,6 +115,8 @@ namespace filesystem
    using boost::filesystem::status;
    using boost::filesystem::last_write_time;
    using boost::filesystem::file_size;
+   using boost::filesystem::create_directory;
+   using boost::filesystem::create_directories;
 }
 }
 
