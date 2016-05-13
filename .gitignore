@@ -1,0 +1,11 @@
+/Debug/*.obj
+/Debug/*.idb
+/Debug/*.pdb
+/Debug/*.exe
+/Debug/*.ilk
+/Debug/*.log
+/Debug/xtsslib.tlog/*.tlog
+/Debug/xtsslib.tlog/*.lastbuildstate
+/*.opendb
+/*.sdf
+/*.user
