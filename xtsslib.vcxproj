@@ -67,6 +67,7 @@
     <ClInclude Include="array_view.hpp" />
     <ClInclude Include="InputParsing.hpp" />
     <ClInclude Include="ParserLL.hpp" />
+    <ClInclude Include="return_status.hpp" />
     <ClInclude Include="Tree.hpp" />
   </ItemGroup>
   <ItemGroup>

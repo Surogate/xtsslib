@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include "array_view.hpp"
+#include "aarray_view.hpp"
 
 int main(void)
 {
