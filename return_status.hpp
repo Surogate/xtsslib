@@ -59,11 +59,11 @@ struct return_status : basic_return_status<int, RETURN_TYPE>
    {}
 
    return_status(int sta, const RETURN_TYPE& rt)
-      : basic_return_status(sta, rt, [](const int& st) { return st == EXIT_SUCCESS; })
+     : basic_return_status<int, RETURN_TYPE>(sta, rt, [](const int& st) { return st == EXIT_SUCCESS; })
    {}
 
    return_status(int sta, RETURN_TYPE&& rt)
-      : basic_return_status(sta, rt, [](const int& st) { return st == EXIT_SUCCESS; })
+     : basic_return_status<int, RETURN_TYPE>(sta, rt, [](const int& st) { return st == EXIT_SUCCESS; })
    {}
 
    return_status(const return_status&) = default;
