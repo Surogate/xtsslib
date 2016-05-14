@@ -2,19 +2,22 @@
 #define ASTRING_VIEW_HEADER_HPP
 
 #if 0 //full standard
+#define STD_STRING_VIEW
 namespace astd
 {
    template<typename T>
    using basic_string_view=std::basic_string_ref<T>;
 }
 #elif _LIBCPP_VERSION || __GLIBCXX__ //experimental
+#define EXPERIMENTAL_STRING_VIEW
 #include <experimental/string_view>
 namespace astd
 {
    template<typename T>
-   using basic_string_view=std::experimental::basic_string_ref<T>;
+   using basic_string_view=std::experimental::basic_string_view<T>;
 }
 #else //boost implementation
+#define BOOST_STRING_VIEW
 #include "boost/utility/string_ref.hpp"
 namespace astd
 {
@@ -31,6 +34,7 @@ namespace astd
    typedef basic_string_view<wchar_t> wstring_view;
 }
 
+#ifdef BOOST_STRING_VIEW
 #include <functional>
 
 namespace std
@@ -55,5 +59,6 @@ namespace std
       }
    };
 }
+#endif //!BOOST_STRING_VIEW
 
 #endif //!ASTRING_VIEW_HEADER_HPP
