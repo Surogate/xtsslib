@@ -68,7 +68,6 @@
     <ClInclude Include="aarray_view.hpp" />
     <ClInclude Include="afilesystem.hpp" />
     <ClInclude Include="afilesystem_fwd.hpp" />
-    <ClInclude Include="array_view.hpp" />
     <ClInclude Include="astring_view.hpp" />
     <ClInclude Include="astring_view_fwd.hpp" />
     <ClInclude Include="InputParsing.hpp" />
