@@ -18,11 +18,11 @@ namespace astd
 }
 #else //boost implementation
 #define BOOST_STRING_VIEW
-#include "boost/utility/string_ref.hpp"
+#include "boost/utility/string_view.hpp"
 namespace astd
 {
    template<typename T>
-   using basic_string_view=boost::basic_string_ref<T>;
+   using basic_string_view=boost::basic_string_view<T>;
 }
 #endif //if standard implementation exist
 

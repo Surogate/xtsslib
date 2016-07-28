@@ -43,7 +43,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_47;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\fancel\Documents\boost_stable;C:\Users\fancel\Documents\Catch\single_include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -56,6 +56,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>C:\Users\fancel\Documents\boost_stable;C:\Users\fancel\Documents\Catch\single_include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -64,14 +65,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="aarray_view.hpp" />
+    <ClInclude Include="afilesystem.hpp" />
+    <ClInclude Include="afilesystem_fwd.hpp" />
     <ClInclude Include="array_view.hpp" />
+    <ClInclude Include="astring_view.hpp" />
+    <ClInclude Include="astring_view_fwd.hpp" />
     <ClInclude Include="InputParsing.hpp" />
     <ClInclude Include="ParserLL.hpp" />
     <ClInclude Include="return_status.hpp" />
+    <ClInclude Include="test.hpp" />
+    <ClInclude Include="test_uri.hpp" />
     <ClInclude Include="Tree.hpp" />
+    <ClInclude Include="trim.hpp" />
+    <ClInclude Include="uri_builder.hpp" />
+    <ClInclude Include="uri.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="test_uri.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
