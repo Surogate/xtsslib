@@ -59,6 +59,16 @@ namespace std
       }
    };
 }
+
+#include <string>
+
+inline std::string operator+(const std::string& lhs, const astd::string_view& rhs)
+{
+   std::string result = lhs;
+   result.append(rhs.data(), rhs.size());
+   return result;
+}
+
 #endif //!BOOST_STRING_VIEW
 
 #endif //!ASTRING_VIEW_HEADER_HPP
