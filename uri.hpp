@@ -4,6 +4,7 @@
 #include <string>
 #include "astring_view.hpp"
 #include <iostream>
+#include <algorithm>
 
 namespace xts
 {
