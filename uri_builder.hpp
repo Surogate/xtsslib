@@ -14,6 +14,13 @@ namespace xts
       typedef typename uri::string_type string_type;
       typedef typename uri::string_view_type string_view_type;
 
+      basic_uri_builder() = default;
+      basic_uri_builder(const basic_uri_builder&) = default;
+      basic_uri_builder(basic_uri_builder&&) = default;
+      basic_uri_builder& operator=(basic_uri_builder&&) = default;
+      basic_uri_builder& operator=(const basic_uri_builder&) = default;
+      ~basic_uri_builder() = default;
+
       basic_uri_builder(const uri& uri)
          : scheme(uri.scheme())
          , username(uri.user())
