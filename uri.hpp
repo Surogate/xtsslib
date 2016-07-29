@@ -163,6 +163,10 @@ namespace xts
          : _data(view.to_string())
       {}
 
+      basic_uri(string_type&& str)
+         : _data(str)
+      {}
+
       bool absolute() const { 
          return scheme().size() > 0 && authority().size() > 0; 
       }
