@@ -108,7 +108,7 @@ namespace xts
       basic_uri_tokenizer& operator=(basic_uri_tokenizer&&) = default;
       basic_uri_tokenizer(const string_view_type& view) : _data(view) {}
 
-      string_view_type data() const { return _data; }
+      const string_view_type& data() const { return _data; }
       const_iterator begin() const { return{ _data }; }
       const_iterator end() const { return{}; }
 
@@ -183,11 +183,11 @@ namespace xts
          {
             start += 2;
 
-            std::size_t end = std::min(
+            std::size_t end = (std::min)(
                _data.find_first_of('/', start),
                _data.find_first_of('?', start)
             );
-            end = std::min(
+            end = (std::min)(
                end,
                _data.find_first_of('#', start)
             );
@@ -259,7 +259,7 @@ namespace xts
 
          if (start != string_type::npos)
          {
-            auto end = std::min(_data.find_first_of('?', start),
+            auto end = (std::min)(_data.find_first_of('?', start),
                _data.find_first_of('#', start));
             if (end != string_type::npos)
             {
