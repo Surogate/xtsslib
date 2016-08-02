@@ -96,6 +96,13 @@ TEST_CASE("testing uri viewer" , "[uri]")
       CHECK(sample.queries == u.queries().data());
       CHECK(sample.fragments == u.fragments().data());
    }
+
+   std::vector<xts::uri> vec;
+   for (auto& s : samples)
+   {
+      vec.push_back(xts::uri(s.url));
+   }
+   std::sort(vec.begin(), vec.end());
 }
 
 TEST_CASE("testing uri builder", "[uri]")
@@ -112,7 +119,5 @@ TEST_CASE("testing uri builder", "[uri]")
          dump(u);
          dump(b.assemble());
       }
-
    }
-
 }

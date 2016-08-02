@@ -159,6 +159,16 @@ namespace xts
          return !operator==(rhs);
       }
 
+      bool operator>(const basic_uri& rhs) const
+      {
+         return _data > rhs._data;
+      }
+
+      bool operator<(const basic_uri& rhs) const
+      {
+         return _data < rhs._data;
+      }
+
       basic_uri(const string_view_type& view)
          : _data(view.to_string())
       {}
