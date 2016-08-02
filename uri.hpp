@@ -37,11 +37,12 @@ namespace xts
             : data(view), pos(view.size() ? 0 : string_view_type::npos)
          {}
 
-         string_view_type operator*() const
+         const string_view_type& operator*() const
          {
+	   static string_view_type result;
+	   result.clear();
             if (data.size() > 0 && pos != string_view_type::npos)
             {
-               
                auto tmp_pos = pos;
 
                if (data[tmp_pos] == DELIMITOR)
@@ -54,11 +55,11 @@ namespace xts
 
                if (finded != end)
                {
-                  return{ data.substr(tmp_pos , std::distance(beg, finded)) };
+		 result = { data.substr(tmp_pos , std::distance(beg, finded)) };
                }
-               return{ data.substr(tmp_pos) };
+               result = { data.substr(tmp_pos) };
             }
-            return{};
+            return result;
          }
 
          const_iterator& operator++()
@@ -277,7 +278,7 @@ namespace xts
                _data.find_first_of('#', start));
             if (end != string_type::npos)
             {
-               return string_view_type{ _data.c_str() + start, end - start };
+	      return path_tokenizer(string_view_type{ _data.c_str() + start, end - start });
             }
             else
             {

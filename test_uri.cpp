@@ -46,8 +46,8 @@ std::vector<test_url> create_uri_view_samples()
    std::vector<test_url> result;
 
    result.push_back(test_url());
-   result.push_back({ "reddit.com"
-      , ""     , "", "", "", "", "" , {}, "reddit.com" });
+   result.push_back(test_url{ "reddit.com"
+      , ""     , "", "", "", "", "" , 0, "reddit.com" });
    result.push_back({ "http://reddit.com"
       , "http" , "reddit.com", "", "", "", "reddit.com" });
    result.push_back({ "http://test@reddit.com"
@@ -55,9 +55,9 @@ std::vector<test_url> create_uri_view_samples()
    result.push_back({ "http://test:toto@reddit.com"
       , "http" , "test:toto@reddit.com", "test:toto", "test", "toto", "reddit.com" });
    result.push_back({ "http://reddit.com/tutu"
-      , "http" , "reddit.com", "", "", "", "reddit.com", {}, "/tutu" });
+      , "http" , "reddit.com", "", "", "", "reddit.com", 0, "/tutu" });
    result.push_back({ "http://test:toto@reddit.com/tutu"
-      , "http" , "test:toto@reddit.com", "test:toto", "test", "toto", "reddit.com", {}, "/tutu" });
+      , "http" , "test:toto@reddit.com", "test:toto", "test", "toto", "reddit.com", 0, "/tutu" });
    result.push_back({ "test:toto@reddit.com:80/tutu"
       , "test" , "", "", "", "", "", 0, "toto@reddit.com:80/tutu" });
    result.push_back({ "http://test:toto@reddit.com:80/tutu/titi"
@@ -65,15 +65,15 @@ std::vector<test_url> create_uri_view_samples()
    result.push_back({ "http://test:toto@reddit.com:80/tutu/titi?key=value&key2=value2#fragid1"
       , "http" , "test:toto@reddit.com:80", "test:toto", "test", "toto", "reddit.com", 80, "/tutu/titi", "?key=value&key2=value2", "#fragid1" });
    result.push_back({ "/images/lecture-en-ligne/one-piece/"
-      , "" , "", "", "", "", "", {}, "/images/lecture-en-ligne/one-piece/" });
+      , "" , "", "", "", "", "", 0, "/images/lecture-en-ligne/one-piece/" });
    result.push_back({ "relative/path/to/resource.txt"
-      , "" , "", "", "", "", "",{}, "relative/path/to/resource.txt" });
+      , "" , "", "", "", "", "",0, "relative/path/to/resource.txt" });
    result.push_back({ "./resource.txt#frag01"
-      , "" , "", "", "", "", "",{}, "./resource.txt", "", "#frag01" });
+      , "" , "", "", "", "", "",0, "./resource.txt", "", "#frag01" });
    result.push_back({ "resource.txt"
-      , "" , "", "", "", "", "",{}, "resource.txt" });
+      , "" , "", "", "", "", "",0, "resource.txt" });
    result.push_back({ "#frag01"
-      , "" , "", "", "", "", "",{}, "", "", "#frag01" });
+      , "" , "", "", "", "", "",0, "", "", "#frag01" });
 
    return result;
 }

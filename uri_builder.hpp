@@ -55,7 +55,7 @@ namespace xts
          {
             result += '#' + f;
          }
-         return result;
+         return uri{result};
       }
 
       void set_path_from_string(string_view_type string_view)
