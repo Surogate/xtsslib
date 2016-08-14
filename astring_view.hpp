@@ -50,7 +50,7 @@ namespace std
          const size_t FNV_prime = 16777619U;
 
          size_t Val = FNV_offset_basis;
-         for (auto& c : arg)
+         for (char c : arg)
          {	// fold in another byte
             Val ^= (size_t)c;
             Val *= FNV_prime;

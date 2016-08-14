@@ -11,3 +11,6 @@
 /*.user
 /*.db
 *.suo
+*.tlog
+*.exe
+*.obj
