@@ -29,20 +29,27 @@ namespace xts
          , port(uri.port())
       {
          auto uri_paths = uri.paths();
-         paths = { uri_paths.begin(), uri_paths.end() };
+         paths = convert( uri_paths.begin(), uri_paths.end() );
          auto uri_queries = uri.queries();
-         queries = { uri_queries.begin(), uri_queries.end() };
+         queries = convert( uri_queries.begin(), uri_queries.end() );
          auto uri_fragments = uri.fragments();
-         fragments = { uri_fragments.begin(), uri_fragments.end() };
+         fragments = convert( uri_fragments.begin(), uri_fragments.end() );
       }
 
       uri assemble() const
+      {
+         return uri{assemble_to_string()};
+      }
+
+      string_type assemble_to_string() const
       {
          string_type result;
 
          if (scheme.size())
             result += scheme + ':';
+         
          result += assemble_authority();
+         
          for (auto& p : paths)
          {
             result += '/' + p;
@@ -55,7 +62,8 @@ namespace xts
          {
             result += '#' + f;
          }
-         return uri{result};
+
+         return result;
       }
 
       void set_path_from_string(string_view_type string_view)
@@ -125,6 +133,18 @@ namespace xts
             return "//" + userinfo + hostinfo;
          }        
          return {};
+      }
+
+      template <typename Iterator>
+      static std::vector<string_type> convert(Iterator begin, Iterator end)
+      {
+         std::vector<string_type> result;
+         while (begin != end)
+         {
+            result.emplace_back((*begin).to_string());
+            ++begin;
+         }
+         return result;
       }
    };
 

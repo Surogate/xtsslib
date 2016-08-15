@@ -35,6 +35,35 @@ void dump(const xts::uri& url)
    }
 }
 
+void dump(const xts::uri_builder& builder)
+{
+   std::cout << "======= builder =======" << std::endl;
+   std::cout << "scheme " << builder.scheme << std::endl;
+   std::cout << "username " << builder.username << std::endl;
+   std::cout << "password " << builder.password << std::endl;
+   std::cout << "hostname " << builder.hostname << std::endl;
+   std::cout << "port " << builder.port << std::endl;
+   std::cout << "path" << std::endl;
+   for (auto& str : builder.paths)
+   {
+      std::cout << "/ " << str << std::endl;
+   }
+
+   std::cout << "queries" << std::endl;
+   for (auto& str : builder.queries)
+   {
+      std::cout << "/ " << str << std::endl;
+   }
+
+   std::cout << "fragments" << std::endl;
+   for (auto& str : builder.fragments)
+   {
+      std::cout << "/ " << str << std::endl;
+   }
+
+   std::cout << "to_string " << builder.assemble_to_string() << std::endl;
+}
+
 void dump(const std::string& u)
 {
    xts::uri url(u);
@@ -117,6 +146,7 @@ TEST_CASE("testing uri builder", "[uri]")
       if (u != b.assemble())
       {
          dump(u);
+         dump(b);
          dump(b.assemble());
       }
    }

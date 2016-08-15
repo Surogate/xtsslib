@@ -37,10 +37,9 @@ namespace xts
             : data(view), pos(view.size() ? 0 : string_view_type::npos)
          {}
 
-         const string_view_type& operator*() const
+         string_view_type operator*() const
          {
-	   static string_view_type result;
-	   result.clear();
+	         string_view_type result;
             if (data.size() > 0 && pos != string_view_type::npos)
             {
                auto tmp_pos = pos;
@@ -55,9 +54,12 @@ namespace xts
 
                if (finded != end)
                {
-		 result = { data.substr(tmp_pos , std::distance(beg, finded)) };
+		            result = data.substr(tmp_pos , std::distance(beg, finded));
                }
-               result = { data.substr(tmp_pos) };
+               else
+               {
+                  result = data.substr(tmp_pos);
+               }
             }
             return result;
          }

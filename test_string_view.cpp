@@ -103,8 +103,10 @@ void test_operation()
    {
       auto sub1 = v.substr(7);
       CHECK(sub1 == "world");
+      CHECK(sub1.size() == 5);
       auto sub2 = v.substr(0, 5);
       CHECK(sub2 == "Hello");
+      CHECK(sub2.size() == 5);
    }
 
    {
