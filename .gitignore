@@ -13,3 +13,5 @@
 *.ilk
 *.idb
 *.pdb
+*.ib_pdb_index
+/interprocess/*.TMP
