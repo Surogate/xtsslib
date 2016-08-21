@@ -69,7 +69,7 @@ void test_modifier()
       char arr[] = { 'a', 'b', 'c', 'd', '\0', '\0', '\0' };
       astd::string_view v(arr, sizeof arr);
       auto trim_pos = v.find('\0');
-      if (trim_pos != v.npos)
+      if (trim_pos != std::string::npos)
          v.remove_suffix(v.size() - trim_pos);
       CHECK(v.size() == 4);
    }
@@ -113,7 +113,7 @@ void test_operation()
       auto result = v.find(',');
       CHECK(result == 5);
       result = v.find(',', 6);
-      CHECK(result == astd::string_view::npos);
+      CHECK(result == std::string::npos);
 
       astd::string_view str("There are two needles in this haystack with needles.");
       astd::string_view str2("needle");

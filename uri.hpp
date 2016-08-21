@@ -37,9 +37,9 @@ namespace xts
             : data(view), pos(view.size() ? 0 : string_view_type::npos)
          {}
 
-         string_view_type operator*() const
+         string_view_type& operator*() const
          {
-	         string_view_type result;
+	    static thread_local string_view_type result;
             if (data.size() > 0 && pos != string_view_type::npos)
             {
                auto tmp_pos = pos;
