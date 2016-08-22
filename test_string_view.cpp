@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 #include "astring_view.hpp"
 #include "catch.hpp"
@@ -88,8 +89,7 @@ void test_operation()
    astd::string_view v = "Hello, world";
 
    {
-      auto str = v.to_string();      
-      CHECK(astd::string_view(typeid(str).name()).find("std::basic_string") != std::string::npos);
+     std::string str = v.to_string();
       CHECK(str == v);
    }
 
