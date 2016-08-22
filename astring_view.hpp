@@ -50,7 +50,7 @@ namespace std
          const size_t FNV_prime = 16777619U;
 
          size_t Val = FNV_offset_basis;
-         for (auto& c : arg)
+         for (char c : arg)
          {	// fold in another byte
             Val ^= (size_t)c;
             Val *= FNV_prime;
@@ -60,15 +60,15 @@ namespace std
    };
 }
 
+#endif //!BOOST_STRING_VIEW
+
 #include <string>
 
 inline std::string operator+(const std::string& lhs, const astd::string_view& rhs)
 {
-   std::string result = lhs;
-   result.append(rhs.data(), rhs.size());
-   return result;
+  std::string result = lhs;
+  result.append(rhs.data(), rhs.size());
+  return result;
 }
-
-#endif //!BOOST_STRING_VIEW
 
 #endif //!ASTRING_VIEW_HEADER_HPP

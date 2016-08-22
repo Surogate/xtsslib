@@ -35,6 +35,35 @@ void dump(const xts::uri& url)
    }
 }
 
+void dump(const xts::uri_builder& builder)
+{
+   std::cout << "======= builder =======" << std::endl;
+   std::cout << "scheme " << builder.scheme << std::endl;
+   std::cout << "username " << builder.username << std::endl;
+   std::cout << "password " << builder.password << std::endl;
+   std::cout << "hostname " << builder.hostname << std::endl;
+   std::cout << "port " << builder.port << std::endl;
+   std::cout << "path" << std::endl;
+   for (auto& str : builder.paths)
+   {
+      std::cout << "/ " << str << std::endl;
+   }
+
+   std::cout << "queries" << std::endl;
+   for (auto& str : builder.queries)
+   {
+      std::cout << "/ " << str << std::endl;
+   }
+
+   std::cout << "fragments" << std::endl;
+   for (auto& str : builder.fragments)
+   {
+      std::cout << "/ " << str << std::endl;
+   }
+
+   std::cout << "to_string " << builder.assemble_to_string() << std::endl;
+}
+
 void dump(const std::string& u)
 {
    xts::uri url(u);
@@ -78,6 +107,30 @@ std::vector<test_url> create_uri_view_samples()
    return result;
 }
 
+std::vector<test_url_paths> create_uri_paths_samples()
+{
+   std::vector<test_url_paths> result;
+
+   result.push_back(test_url_paths());
+   result.push_back({ "//reddit.com",{ } });
+   result.push_back({ "reddit.com",{ "reddit.com" } });
+   result.push_back({ "test:toto@reddit.com",{ "toto@reddit.com" } });
+   result.push_back({ "test:toto@reddit.com:80/tutu",{ "toto@reddit.com:80", "tutu" } });
+   result.push_back({ "http://test:toto@reddit.com:80/tutu/titi",{ "tutu", "titi" } });
+   result.push_back({ "http://test:toto@reddit.com:80/tutu/titi?key=value&key2=value2#fragid1", 
+                     {"tutu", "titi" } });
+   result.push_back({ "/images/lecture-en-ligne/one-piece/",
+   { "images", "lecture-en-ligne", "one-piece", "" } });
+   result.push_back({ "relative/path/to/resource.txt",
+   { "relative", "path", "to", "resource.txt" } });
+   result.push_back({ "./resource.txt#frag01",
+   { ".", "resource.txt" } });
+   result.push_back({ "resource.txt",
+   { "resource.txt" } });
+
+   return result;
+}
+
 TEST_CASE("testing uri viewer" , "[uri]")
 {
    auto samples = create_uri_view_samples();
@@ -103,6 +156,22 @@ TEST_CASE("testing uri viewer" , "[uri]")
       vec.push_back(xts::uri(s.url));
    }
    std::sort(vec.begin(), vec.end());
+
+   auto path_sample = create_uri_paths_samples();
+
+   for (auto& sample : path_sample)
+   {
+      xts::uri u(sample.url);
+      auto paths = u.paths();
+      auto size = std::distance(paths.begin(), paths.end());
+      CHECK(sample.paths.size() == size);
+      if (sample.paths.size() != size)
+      {
+         std::cerr << sample.url << std::endl;
+      }
+      if (sample.paths.size())
+         CHECK(std::equal(paths.begin(), paths.end(), sample.paths.begin(), sample.paths.end()));
+   }
 }
 
 TEST_CASE("testing uri builder", "[uri]")
@@ -117,6 +186,7 @@ TEST_CASE("testing uri builder", "[uri]")
       if (u != b.assemble())
       {
          dump(u);
+         dump(b);
          dump(b.assemble());
       }
    }

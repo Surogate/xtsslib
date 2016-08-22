@@ -20,6 +20,12 @@ struct test_url
    std::string fragments;
 };
 
+struct test_url_paths
+{
+   std::string url;
+   std::vector<std::string> paths;
+};
+
 std::vector<test_url> create_uri_view_samples();
 void dump(const std::string& url);
 

@@ -72,6 +72,10 @@
     <ClInclude Include="astring_view.hpp" />
     <ClInclude Include="astring_view_fwd.hpp" />
     <ClInclude Include="InputParsing.hpp" />
+    <ClInclude Include="interprocess\linux_named_recursive_mutex.hpp" />
+    <ClInclude Include="interprocess\named_recursive_mutex.hpp" />
+    <ClInclude Include="interprocess\null_named_recursive_mutex.hpp" />
+    <ClInclude Include="interprocess\windows_named_recursive_mutex.hpp" />
     <ClInclude Include="ParserLL.hpp" />
     <ClInclude Include="return_status.hpp" />
     <ClInclude Include="test.hpp" />
@@ -83,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="test_string_view.cpp" />
     <ClCompile Include="test_uri.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
