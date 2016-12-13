@@ -15,3 +15,14 @@
 *.pdb
 *.ib_pdb_index
 /interprocess/*.TMP
+bin/CMakeFiles/*
+*.vcxproj
+*.stamp
+*.cmake
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*CMakeCache.txt
+*.ipch
+*.db-shm
+*.db-wal
