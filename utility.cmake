@@ -19,7 +19,6 @@ function(find_boost_lib)
 		endif (EXISTS "${BOOST_ROOT}")
 		
 		foreach (LIB ${ARGN})
-			message ("fetching ${LIB} ...")
 			find_library(Boost_LIBRARIES_RELEASE_${LIB} "libboost_${LIB}-vc-mt-${BOOST_VERSION}" HINTS "${BOOST_ROOT}/stage/lib" PATHS "${BOOST_ROOT}/stage/lib")
 			find_library(Boost_LIBRARIES_DEBUG_${LIB} "libboost_${LIB}-vc-mt-gd-${BOOST_VERSION}" HINTS "${BOOST_ROOT}/stage/lib" PATHS "${BOOST_ROOT}/stage/lib")
 			
