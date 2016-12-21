@@ -15,10 +15,9 @@
 *.pdb
 *.ib_pdb_index
 /interprocess/*.TMP
-bin/CMakeFiles/*
+*/CMakeFiles/*
 *.vcxproj
 *.stamp
-*.cmake
 *.sln
 *.vcxproj
 *.vcxproj.filters
@@ -26,3 +25,4 @@ bin/CMakeFiles/*
 *.ipch
 *.db-shm
 *.db-wal
+cmake_install.cmake
