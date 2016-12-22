@@ -6,7 +6,7 @@
 namespace xts
 {
 	//Assume that the input string have only numeral, no space, no '-', no '+', and doesn't overflow
-	std::size_t fast_str_to_uint(astd::astring_view str)
+	std::size_t fast_str_to_uint(astd::string_view str)
 	{
 		std::size_t result = 0;
 		for (char c : str)
