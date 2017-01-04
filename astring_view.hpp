@@ -8,7 +8,7 @@
 namespace astd
 {
    template<typename T>
-   using basic_string_view=std::basic_string_ref<T>;
+   using basic_string_view=std::basic_string_view<T>;
 }
 
 #elif _LIBCPP_VERSION || __GLIBCXX__ //experimental
