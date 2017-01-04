@@ -1,13 +1,16 @@
 #ifndef ASTRING_VIEW_HEADER_HPP
 #define ASTRING_VIEW_HEADER_HPP
 
-#if 0 //full standard
+#if _HAS_CXX17 //full standard
 #define STD_STRING_VIEW
+#include <string_view>
+
 namespace astd
 {
    template<typename T>
    using basic_string_view=std::basic_string_ref<T>;
 }
+
 #elif _LIBCPP_VERSION || __GLIBCXX__ //experimental
 #define EXPERIMENTAL_STRING_VIEW
 #include <experimental/string_view>
