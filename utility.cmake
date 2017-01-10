@@ -41,6 +41,7 @@ function(find_boost_lib)
 	endif (${UNIX} OR ${APPLE})
 endfunction(find_boost_lib)
 
+	set(SDL_LIBRARY optimized ${SDL2_LIBRARIES_RELEASE} debug ${SDL2_LIBRARIES_DEBUG} PARENT_SCOPE)
 function(assert_exists PATH_TO_CHECK)
 	if (NOT EXISTS "${PATH_TO_CHECK}")
 		message (SEND_ERROR "${PATH_TO_CHECK} not found")
