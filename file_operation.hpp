@@ -14,7 +14,7 @@ namespace xts
 		if (in)
 		{
 			in.seekg(0, std::ios::end);
-			result.resize(in.tellg());
+			result.resize(std::size_t(in.tellg()));
 			in.seekg(0, std::ios::beg);
 			in.read(result.data(), result.size());
 		}
