@@ -14,6 +14,7 @@ namespace filesystem
    typedef std::experimental::filesystem::file_status file_status;
    typedef std::experimental::filesystem::file_type file_type;
    typedef std::error_code error_code;
+   using std::experimental::filesystem::hash_value;
    using std::experimental::filesystem::current_path;
    using std::experimental::filesystem::exists;
    using std::experimental::filesystem::remove;
@@ -24,6 +25,14 @@ namespace filesystem
    using std::experimental::filesystem::file_size;
    using std::experimental::filesystem::create_directory;
    using std::experimental::filesystem::create_directories;
+
+   struct path_hasher
+   {
+	   std::size_t operator()(const astd::filesystem::path& path) noexcept
+	   {
+		   return hash_value(path);
+	   }
+   };
 }
 }
 
@@ -117,6 +126,7 @@ namespace filesystem
    using boost::filesystem::file_size;
    using boost::filesystem::create_directory;
    using boost::filesystem::create_directories;
+   using boost::filesystem::hash_value;
 }
 }
 
