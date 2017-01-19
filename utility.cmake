@@ -9,7 +9,20 @@ function(find_boost_lib)
 		find_package(Boost REQUIRED COMPONENTS ${ARGN})
 	else (${UNIX} OR ${APPLE})
 		set(BOOST_DIR ${PROJECT_SOURCE_DIR} CACHE PATH "The root directory of boost, leave it as is if you initialized subrepositories")
+		set (BOOST_LIBRARY_DIR "${BOOST_DIR}/stage/lib" CACHE PATH "The directory where boost lib are generated")
 		set(BOOST_ROOT "${BOOST_DIR}")
+		set(BOOST_LIBRARYDIR "${BOOST_LIBRARY_DIR}")
+		
+		set(GEN_BOOST_STATIC_LIB TRUE CACHE BOOL "You have generated static boost lib")
+		if (${GEN_BOOST_STATIC_LIB})
+			set(Boost_USE_STATIC_LIBS   ON)
+		endif (${GEN_BOOST_STATIC_LIB})
+		
+		set(GEN_BOOST_MT_LIB TRUE CACHE BOOL "You have generated static boost lib")
+		if (${GEN_BOOST_MT_LIB})
+			set(Boost_USE_MULTITHREADED   ON)
+		endif (${GEN_BOOST_MT_LIB})
+		
 		find_package(Boost REQUIRED COMPONENTS ${ARGN})
 	endif (${UNIX} OR ${APPLE})
 	
