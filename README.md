@@ -22,10 +22,14 @@ May introduce a dependancy on boost/assert, boost/config, boost/throw_exception,
     - functions to fetch all the content of files
   * trim.hpp
     - heapless trim functions
-    - depend on astring_view
+    - depend on astd::astring_view
   * interprocess
     - Offer cross platform, interprocess robust mutexes
     - dependancy on boost/interprocess
+  * uri.hpp & uri_builder.hpp
+    - Offer tools to parse and manipulate uri formatted data 
+  * return_status.hpp
+    - return_status structure designed to provide return types and status information.
     
 ## cmake
   * utility.cmake : functions to find boost and SDL2 library
