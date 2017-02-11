@@ -134,7 +134,29 @@ static void test_modifiers()
 	CHECK(hash.size() == 0);
 	CHECK(hash.bucket_count() == 0);
 
+	hash["test"] = "yoyo";
+	hash["habsburg"] = "austria";
+	hash["de valois"] = "france";
 
+
+	testing_hm hash2;
+	hash.swap(hash2);
+
+	std::array<testing_hm::inner_value_type, 3> valid3 = {
+		testing_hm::inner_value_type{ "test", "yoyo" },
+		testing_hm::inner_value_type{ "habsburg", "austria" },
+		testing_hm::inner_value_type{ "de valois", "france" }
+	};
+
+	CHECK(hash2.size() == 3);
+	CHECK(hash.size() == 0);
+	for (auto& pair : valid3)
+	{
+		auto it = hash2.find(pair.first);
+		CHECK(it != hash2.end());
+		CHECK(it->first == pair.first);
+		CHECK(it->second == pair.second);
+	}
 }
 
 static void test_limit()

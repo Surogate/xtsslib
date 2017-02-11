@@ -93,6 +93,12 @@ namespace xts
 		{
 			return _block.begin() + bucket(key);
 		}
+
+		inline typename block_container::const_iterator get_blk(const key_type& key) const
+		{
+			return _block.begin() + bucket(key);
+		}
+
 		inline typename block_container::iterator get_blk(const local_iterator& pos)
 		{
 			auto blk_it = get_blk(pos->first);
@@ -101,7 +107,7 @@ namespace xts
 			return blk_it;
 		}
 
-		inline typename local_iterator find_in_block(const block_type& blk, const key_type& key_value)
+		inline typename local_iterator find_in_block(const block_type& blk, const key_type& key_value) const
 		{
 			return std::find_if(blk.first, blk.second, [&key_value, this](const auto& pair_value) {
 				return _equal(key_value, pair_value.first);
@@ -154,7 +160,7 @@ namespace xts
 			return _data.size();
 		}
 
-		constexpr std::size_t max_size()
+		constexpr std::size_t max_size() const
 		{
 			return SIZE;
 		}
@@ -287,7 +293,7 @@ namespace xts
 			return _blk[n].second;
 		}
 
-		inline size_type bucket(const KEY& key)
+		inline size_type bucket(const KEY& key) const
 		{
 			return _hash(key) % max_size();
 		}
