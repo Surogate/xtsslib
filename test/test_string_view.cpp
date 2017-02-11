@@ -3,7 +3,7 @@
 #include "astring_view.hpp"
 #include "catch.hpp"
 
-void test_constructor()
+static void test_constructor()
 {
    std::string cppstr = "Foo";
    char array[3] = { 'B', 'a', 'r' };
@@ -17,7 +17,7 @@ void test_constructor()
    CHECK(wcstr_v == L"xyzzy");
 }
 
-void test_access()
+static void test_access()
 {
    std::string ref = "Hello, world";
    astd::string_view v = "Hello, world";
@@ -47,7 +47,7 @@ void test_access()
    CHECK(v.data() == &v[0]);
 }
 
-void test_capacity()
+static void test_capacity()
 {
    astd::string_view str("Test string");
    CHECK(str.size() == 11);
@@ -57,7 +57,7 @@ void test_capacity()
    CHECK(astd::string_view().empty() == true);
 }
 
-void test_modifier()
+static void test_modifier()
 {
    {
       std::string str = "   trim me";
@@ -84,7 +84,7 @@ void test_modifier()
    }
 }
 
-void test_operation()
+static void test_operation()
 {
    astd::string_view v = "Hello, world";
 
@@ -153,7 +153,6 @@ void test_operation()
       CHECK(found == 2);
    }
 }
-
 
 TEST_CASE("testing string_view", "[astring_view]")
 {

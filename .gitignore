@@ -26,3 +26,4 @@
 *.db-shm
 *.db-wal
 cmake_install.cmake
+bin/.vs/*
