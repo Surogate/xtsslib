@@ -30,14 +30,19 @@ set (XTSSLIB_SOURCES
 	${PROJECT_SOURCE_DIR}/test/main.cpp
 	${PROJECT_SOURCE_DIR}/test/test_string_view.cpp
 	${PROJECT_SOURCE_DIR}/test/test_uri.cpp
+	${PROJECT_SOURCE_DIR}/test/test_statics.cpp
 	${PROJECT_SOURCE_DIR}/aarray_view.hpp
 	${PROJECT_SOURCE_DIR}/afilesystem.hpp
 	${PROJECT_SOURCE_DIR}/afilesystem_fwd.hpp
 	${PROJECT_SOURCE_DIR}/astring_view.hpp
 	${PROJECT_SOURCE_DIR}/astring_view_fwd.hpp
-	${PROJECT_SOURCE_DIR}/InputParsing.hpp
+	${PROJECT_SOURCE_DIR}/fast_convert.hpp
+	${PROJECT_SOURCE_DIR}/file_operation.hpp
 	${PROJECT_SOURCE_DIR}/ParserLL.hpp
 	${PROJECT_SOURCE_DIR}/return_status.hpp
+	${PROJECT_SOURCE_DIR}/static_hashmap.hpp
+	${PROJECT_SOURCE_DIR}/static_vector.hpp
+	${PROJECT_SOURCE_DIR}/statics.hpp
 	${PROJECT_SOURCE_DIR}/test.hpp
 	${PROJECT_SOURCE_DIR}/test_uri.hpp
 	${PROJECT_SOURCE_DIR}/Tree.hpp
