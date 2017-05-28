@@ -27,3 +27,4 @@
 *.db-wal
 cmake_install.cmake
 bin/.vs/*
+*.vspx

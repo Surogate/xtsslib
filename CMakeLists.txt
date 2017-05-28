@@ -31,13 +31,17 @@ set (XTSSLIB_SOURCES
 	${PROJECT_SOURCE_DIR}/test/test_string_view.cpp
 	${PROJECT_SOURCE_DIR}/test/test_uri.cpp
 	${PROJECT_SOURCE_DIR}/test/test_statics.cpp
+	${PROJECT_SOURCE_DIR}/test/test_matrix.cpp
+	${PROJECT_SOURCE_DIR}/2Dcoordinate.hpp
 	${PROJECT_SOURCE_DIR}/aarray_view.hpp
 	${PROJECT_SOURCE_DIR}/afilesystem.hpp
 	${PROJECT_SOURCE_DIR}/afilesystem_fwd.hpp
+	${PROJECT_SOURCE_DIR}/astar.hpp
 	${PROJECT_SOURCE_DIR}/astring_view.hpp
 	${PROJECT_SOURCE_DIR}/astring_view_fwd.hpp
 	${PROJECT_SOURCE_DIR}/fast_convert.hpp
 	${PROJECT_SOURCE_DIR}/file_operation.hpp
+	${PROJECT_SOURCE_DIR}/matrix.hpp
 	${PROJECT_SOURCE_DIR}/ParserLL.hpp
 	${PROJECT_SOURCE_DIR}/return_status.hpp
 	${PROJECT_SOURCE_DIR}/static_hashmap.hpp
