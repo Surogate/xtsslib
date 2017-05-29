@@ -28,11 +28,12 @@ include_directories("${CATCH_ROOT_DIR}/include")
 # sources in the resolver_server directory
 set (XTSSLIB_SOURCES 
 	${PROJECT_SOURCE_DIR}/test/main.cpp
+	${PROJECT_SOURCE_DIR}/test/test_astar.cpp
+	${PROJECT_SOURCE_DIR}/test/test_matrix.cpp
+	${PROJECT_SOURCE_DIR}/test/test_statics.cpp
 	${PROJECT_SOURCE_DIR}/test/test_string_view.cpp
 	${PROJECT_SOURCE_DIR}/test/test_uri.cpp
-	${PROJECT_SOURCE_DIR}/test/test_statics.cpp
-	${PROJECT_SOURCE_DIR}/test/test_matrix.cpp
-	${PROJECT_SOURCE_DIR}/2Dcoordinate.hpp
+	${PROJECT_SOURCE_DIR}/2Dgrid.hpp
 	${PROJECT_SOURCE_DIR}/aarray_view.hpp
 	${PROJECT_SOURCE_DIR}/afilesystem.hpp
 	${PROJECT_SOURCE_DIR}/afilesystem_fwd.hpp

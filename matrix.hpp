@@ -4,12 +4,77 @@
 #include <array>
 #include <algorithm>
 #include <cstddef>
+#include <cassert>
 #include "aarray_view.hpp"
 
 namespace xts
 {
 	template <typename T, std::size_t width, std::size_t height>
-	using matrix = std::array<T, width * height>;
+	class matrix {
+		typedef std::array<T, width * height> data_holder;
+		data_holder data;
+
+	public:
+		typedef T value_type;
+		typedef T* pointer;
+		typedef const T* const_pointer;
+		typedef T& reference;
+		typedef const T& const_reference;
+		typedef typename data_holder::iterator iterator;
+		typedef typename data_holder::const_iterator const_iterator;
+		typedef std::size_t size_type;
+		typedef std::reverse_iterator<iterator> reverse_iterator;
+		typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+		
+		enum {
+			WIDTH = width,
+			HEIGHT = height
+		};
+
+		matrix() = default;
+		matrix(const matrix&) = default;
+		matrix& operator=(const matrix&) = default;
+		matrix(matrix&&) noexcept = default;
+		matrix& operator=(matrix&&) noexcept = default;
+		matrix(std::initializer_list<T> arr)
+		{
+			assert(arr.size() <= data.size());
+			std::copy(arr.begin(), arr.end(), data.begin());
+		}
+		matrix(const astd::array_view<T>& arr)
+		{
+			assert(arr.size() <= data.size());
+			std::copy(arr.begin(), arr.end(), data.begin());
+		}
+		
+		iterator begin() { return data.begin(); }
+		const_iterator begin() const { return data.begin(); }
+		const_iterator cbegin() const { return data.cbegin(); }
+		iterator end() { return data.end(); }
+		const_iterator end() const { return data.end(); }
+		const_iterator cend() const { return data.cend(); }
+		reverse_iterator rbegin() { return data.rbegin(); }
+		reverse_iterator rend() { return data.rend(); }
+		const_reverse_iterator rbegin() const { return data.rbegin(); }
+		const_reverse_iterator rend() const { return data.rend(); }
+		const_reverse_iterator crbegin() const { return data.crbegin(); }
+		const_reverse_iterator crend() const { return data.crend(); }
+		
+		constexpr auto size() const noexcept { return data.size(); }
+		constexpr auto max_size() const noexcept { return data.max_size(); }
+		constexpr auto capacity() const noexcept { return data.capacity(); }
+
+		T& at(std::size_t index) { return data.at(index); }
+		const T& at(std::size_t index) const { return data.at(index); }
+		T& operator[](std::size_t index) { return data[index]; }
+		const T& operator[](std::size_t index) const { return data[index]; }
+	};
+
+	template <typename T, std::size_t width, std::size_t height>
+	bool operator==(const matrix<T, width, height>& lval, const matrix<T, width, height>& rval)
+	{
+		return std::equal(lval.begin(), lval.end(), rval.begin(), rval.end());
+	}
 
 	template <typename T, std::size_t size>
 	using vec = matrix<T, size, 1>;
@@ -26,19 +91,31 @@ namespace xts
 	template <typename T>
 	using matrix4 = matrix<T, 4, 4>;
 
-	template <typename T>
+	template <typename T, std::size_t width, std::size_t height>
 	struct coordinate_ref
 	{
-		coordinate_ref(T& vec) : _vec(vec) {
-			static_assert(T::column >= 3);
+		coordinate_ref(matrix<T, width, height>& vec) : _vec(vec) 
+		{
+			static_assert(width * height >= 3, "invalid array");
 		}
 
-		typename T::value_type& x() { return _vec[0]; }
-		typename T::value_type& y() { return _vec[1]; }
-		typename T::value_type& z() { return _vec[2]; }
+		T& x() { return _vec[0]; }
+		T& y() { return _vec[1]; }
+		T& z() { return _vec[2]; }
 
-		T& _vec;
+		matrix<T, width, height>& _vec;
 	};
+
+	template <typename T, std::size_t column, std::size_t row>
+	matrix<T, column, row> add(const matrix<T, column, row>& lval, const matrix<T, column, row>& rval)
+	{
+		matrix<T, column, row> result;
+		std::transform(lval.begin(), lval.end(), rval.begin(), result.begin(), [](const auto& inner_lval, const auto& inner_rval)
+		{
+			return inner_lval + inner_rval;
+		});
+		return result;
+	}
 
 	template <typename T, std::size_t column, std::size_t row>
 	matrix<T, column, row> operator+(const matrix<T, column, row>& lval, const matrix<T, column, row>& rval)
@@ -95,7 +172,7 @@ namespace xts
 	template <typename T, std::size_t column, std::size_t row>
 	matrix<T, row, column> transpose(const matrix<T, column, row>& source)
 	{
-		matrix<T, lrow, lcolumn> result;
+		matrix<T, row, column> result;
 
 		for (int i = 0; i < row; i++)
 			for (int j = 0; j < column; j++)

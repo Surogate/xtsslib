@@ -855,8 +855,6 @@ void basic_test_a_star()
 			result_index++;
 		}
 	}
-
-	std::cout << "basic_test_a_star ok" << std::endl;
 }
 
 void test_hash()
@@ -868,20 +866,18 @@ void test_hash()
 	test_map_hash<32>();
 	test_map_hash<64>();
 	test_map_hash<128>();
-	std::cout << "test hash ok" << std::endl;
 }
 
 void conformity_test()
 {
 	for (int i = 0; i < 1000; i++)
 		randomized_test_a_star();
-	std::cout << "conformity test ok !" << std::endl;
 }
 
 TEST_CASE("test a star", "[astart]")
 {
 	basic_test_a_star();
 	conformity_test();
-	profiling_performance();
-	test_hash();
+//	profiling_performance();
+//	test_hash();
 }
