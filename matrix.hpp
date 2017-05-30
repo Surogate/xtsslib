@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <cassert>
+#include <numeric>
 #include "aarray_view.hpp"
 
 namespace xts
@@ -182,7 +183,7 @@ namespace xts
 
 	template <typename T, std::size_t column>
 	inline T dot_product(const matrix<T, column, 1>& lval, const matrix<T, column, 1>& rval)
-	{		
+	{
 		return std::inner_product(lval.begin(), lval.end(), rval.begin(), T(0));
 	}
 

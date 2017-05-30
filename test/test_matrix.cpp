@@ -58,6 +58,13 @@ void operation_test()
 			++trans_index;
 		}
 	}
+
+	{
+		xts::vec3<int> lval{ 1, 3, -5 };
+		xts::vec3<int> rval{ 4, -2, -1 };
+		auto result = xts::dot_product(lval, rval);
+		CHECK(result == 3);
+	}
 }
 
 
