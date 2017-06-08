@@ -110,7 +110,7 @@ template <typename CHAR_CONTAINER> class basic_uri
    bool operator<(const basic_uri& rhs) const { return _data < rhs._data; }
 
    basic_uri(const string_view_type& view)
-       : _data(view.to_string())
+       : _data(view)
    {
    }
 
@@ -203,7 +203,7 @@ template <typename CHAR_CONTAINER> class basic_uri
          auto port = host_port.substr(delimitor + 1);
          if(port.size())
          {
-            return stoul(port.to_string());
+            return std::stoul(std::string(port));
          }
       }
       return {};

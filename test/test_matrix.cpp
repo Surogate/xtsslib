@@ -36,7 +36,7 @@ void operation_test()
 	}
 
 	{
-		xts::matrix<int, 4, 4> mat{
+		xts::mat4<int> mat{
 			0x0, 0x1, 0x2, 0x3,
 			0x4, 0x5, 0x6, 0x7,
 			0x8, 0x9, 0xA, 0xB,
@@ -64,6 +64,86 @@ void operation_test()
 		xts::vec3<int> rval{ 4, -2, -1 };
 		auto result = xts::dot_product(lval, rval);
 		CHECK(result == 3);
+	}
+
+	{
+		xts::mat4<int> trans{
+			1, 0, 0, 0,
+			0, 1, 0, 0,
+			0, 0, 1, 0,
+			1, 1, 1, 1
+		};
+
+		xts::vec4<int> pos{
+			1, 2, 3, 1
+		};
+
+		auto result = xts::dot_product(trans, pos);
+		REQUIRE(result.size() == 4);
+		std::size_t i = 0;
+		for (auto n : { 2, 3, 4, 1 })
+		{
+			CHECK(result[i] == n);
+			i++;
+		}
+	}
+
+	{
+		xts::mat4<int> ltrans{
+			1, 0, 0, 0,
+			0, 1, 0, 0,
+			0, 0, 1, 0,
+			1, 1, 1, 1
+		};
+
+		xts::mat4<int> rtrans{
+			1, 0, 0, 0,
+			0, 1, 0, 0,
+			0, 0, 1, 0,
+			1, 2, 3, 1
+		};
+
+		auto result = xts::dot_product(ltrans, rtrans);
+		REQUIRE(result.size() == 16);
+		std::size_t i = 0;
+		for (auto n : { 1, 0, 0, 0,
+						0, 1, 0, 0,
+						0, 0, 1, 0,
+						2, 3, 4, 1})
+		{
+			CHECK(result[i] == n);
+			i++;
+		}
+	}
+
+	{
+		auto m1 = xts::identity<int, 1>();
+		REQUIRE(m1.size() == 1);
+		CHECK(m1[0] == 1);
+	}
+
+	{
+		auto m1 = xts::identity<int, 2>();
+		REQUIRE(m1.size() == 4);
+		CHECK(m1[0] == 1);
+		CHECK(m1[3] == 1);
+	}
+
+	{
+		auto m1 = xts::identity<int, 3>();
+		REQUIRE(m1.size() == 9);
+		CHECK(m1[0] == 1);
+		CHECK(m1[4] == 1);
+		CHECK(m1[8] == 1);
+	}
+
+	{
+		auto m1 = xts::identity<int, 4>();
+		REQUIRE(m1.size() == 16);
+		CHECK(m1[0] == 1);
+		CHECK(m1[5] == 1);
+		CHECK(m1[10] == 1);
+		CHECK(m1[15] == 1);
 	}
 }
 

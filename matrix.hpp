@@ -90,7 +90,13 @@ namespace xts
 	using vec4 = vec<T, 4>;
 
 	template <typename T>
-	using matrix4 = matrix<T, 4, 4>;
+	using mat2 = matrix<T, 2, 2>;
+
+	template <typename T>
+	using mat3 = matrix<T, 3, 3>;
+
+	template <typename T>
+	using mat4 = matrix<T, 4, 4>;
 
 	template <typename T, std::size_t width, std::size_t height>
 	struct coordinate_ref
@@ -106,17 +112,6 @@ namespace xts
 
 		matrix<T, width, height>& _vec;
 	};
-
-	template <typename T, std::size_t column, std::size_t row>
-	matrix<T, column, row> add(const matrix<T, column, row>& lval, const matrix<T, column, row>& rval)
-	{
-		matrix<T, column, row> result;
-		std::transform(lval.begin(), lval.end(), rval.begin(), result.begin(), [](const auto& inner_lval, const auto& inner_rval)
-		{
-			return inner_lval + inner_rval;
-		});
-		return result;
-	}
 
 	template <typename T, std::size_t column, std::size_t row>
 	matrix<T, column, row> operator+(const matrix<T, column, row>& lval, const matrix<T, column, row>& rval)
@@ -188,7 +183,7 @@ namespace xts
 	}
 
 	template <typename T>
-	inline vec4<T> dot_product(const matrix4<T>& transformation, const vec4<T>& vertex)
+	inline vec4<T> dot_product(const mat4<T>& transformation, const vec4<T>& vertex)
 	{
 		return {
 			transformation[0] * vertex[0] + transformation[4] * vertex[1] + transformation[8]	* vertex[2] + transformation[0xC] * vertex[3],
@@ -199,7 +194,7 @@ namespace xts
 	}
 
 	template <typename T>
-	inline matrix4<T> dot_product(const matrix4<T>& lval, const matrix4<T>& rval)
+	inline mat4<T> dot_product(const mat4<T>& lval, const mat4<T>& rval)
 	{
 		return {
 			lval[0] * rval[0]	+ lval[4] * rval[1]		+ lval[8]	* rval[2]	+ lval[0xC] * rval[3], //0
@@ -244,12 +239,29 @@ namespace xts
 	template <typename T, std::size_t size>
 	matrix<T, size, size> identity() {
 		matrix<T, size, size> result;
-		for (int i = 0; i < result.size(); i++)
+		for (std::size_t i = 0; i < result.size(); i++)
 		{
 			if (!(i % (size + 1)))
+			{
 				result[i] = T(1);
+			}
+			else
+			{
+				result[i] = T(0);
+			}
 		}
 		return result;
+	}
+
+	template <typename T>
+	matrix<T, 4, 4> identity4()
+	{
+		return {
+			T(1), T(0), T(0), T(0),
+			T(0), T(1), T(0), T(0),
+			T(0), T(0), T(1), T(0),
+			T(0), T(0), T(0), T(1)
+		};
 	}
 
 	template <typename T>

@@ -3,141 +3,263 @@
 
 #include "aarray_view.hpp"
 #include "static_vector.hpp"
+#include "operation_type.hpp"
 #include <vector>
 
-#include "boost/container/flat_map.hpp"
-
 namespace a_star {
-	template <typename cost_t>
-	struct index_data
-	{
-		index_data(std::size_t index = 0, std::size_t c = std::numeric_limits<std::size_t>::max()) : map_index(index), cost(c) {}
-		index_data(const index_data&) = default;
-		index_data& operator=(const index_data&) = default;
-		index_data(index_data&&) noexcept = default;
-		index_data& operator=(index_data&&) noexcept = default;
-
-		std::size_t map_index;
-		cost_t	cost;
-	};
-
-	struct coord_data_greater_cost
-	{
-		template <typename T>
-		bool operator()(const T& lval, const T& rval)
+	namespace _impl {
+		template <typename cost_t>
+		struct index_data
 		{
-			return lval.cost > rval.cost;
-		}
-	};
+			index_data(int index = 0, cost_t c = std::numeric_limits<cost_t>::max()) : map_index(index), cost(c) {}
+			index_data(const index_data&) = default;
+			index_data& operator=(const index_data&) = default;
+			index_data(index_data&&) noexcept = default;
+			index_data& operator=(index_data&&) noexcept = default;
 
-	template <typename visited_dictionary>
-	int fill_output(const visited_dictionary& visited,
-		std::size_t local_start_index, typename visited_dictionary::const_iterator it_end_node,
-		astd::array_ref<std::size_t>& out_buffer)
-	{
-		std::size_t result = 0;
-		auto visited_end = visited.end();
-		while (it_end_node != visited_end && it_end_node->first != local_start_index)
+			int map_index;
+			cost_t	cost;
+		};
+
+		struct coord_data_greater_cost
 		{
-			if (out_buffer.size() > 0)
+			template <typename T>
+			bool operator()(const T& lval, const T& rval)
 			{
-				out_buffer[result % out_buffer.size()] = it_end_node->first;
+				return lval.cost > rval.cost;
 			}
-			result++;
+		};
 
-			it_end_node = visited.find(it_end_node->second.map_index);
-		}
-		if (out_buffer.size())
+		template <typename visited_dictionary>
+		int fill_output(const visited_dictionary& visited,
+			int local_start_index, typename visited_dictionary::const_iterator it_end_node,
+			astd::array_ref<int>& out_buffer)
 		{
-			if (result > out_buffer.size())
+			int result = 0;
+			auto visited_end = visited.end();
+			while (it_end_node != visited_end && it_end_node->first != local_start_index)
 			{
-				std::size_t pivot = result % out_buffer.size();
-				std::rotate(out_buffer.begin(), out_buffer.begin() + pivot, out_buffer.end());
-			}
-			std::reverse(out_buffer.begin(), out_buffer.begin() + std::min(result, out_buffer.size()));
-		}
-		return int(result);
-	}
+				if (out_buffer.size() > 0)
+				{
+					out_buffer[result % out_buffer.size()] = it_end_node->first;
+				}
+				result++;
 
-	template <typename visited_dictionary, std::size_t static_size>
-	int fill_output(const visited_dictionary& visited,
-		std::size_t local_start_index, typename visited_dictionary::const_iterator it_end_node,
-		xts::static_vector<std::size_t, static_size>& out_buffer)
-	{
-		out_buffer.clear();
-		std::size_t result = 0;
-		auto visited_end = visited.end();
-		while (it_end_node != visited_end && it_end_node->first != local_start_index)
+				it_end_node = visited.find(it_end_node->second.map_index);
+			}
+			if (out_buffer.size())
+			{
+				if (std::size_t(result) > out_buffer.size())
+				{
+					std::size_t pivot = result % out_buffer.size();
+					std::rotate(out_buffer.begin(), out_buffer.begin() + pivot, out_buffer.end());
+				}
+				std::reverse(out_buffer.begin(), out_buffer.begin() + std::min(std::size_t(result), out_buffer.size()));
+			}
+			return int(result);
+		}
+
+		template <typename visited_dictionary, std::size_t static_size>
+		int fill_output(const visited_dictionary& visited,
+			int local_start_index, typename visited_dictionary::const_iterator it_end_node,
+			xts::static_vector<int, static_size>& out_buffer)
 		{
-			if (out_buffer.size() < out_buffer.max_size()) 
+			out_buffer.clear();
+			int result = 0;
+			auto visited_end = visited.end();
+			while (it_end_node != visited_end && it_end_node->first != local_start_index)
+			{
+				if (out_buffer.size() < out_buffer.max_size())
+				{
+					out_buffer.push_back(it_end_node->first);
+				}
+				else
+				{
+					out_buffer[result % out_buffer.size()] = it_end_node->first;
+				}
+				result++;
+
+				it_end_node = visited.find(it_end_node->second.map_index);
+			}
+			if (out_buffer.size())
+			{
+				if (std::size_t(result) > out_buffer.size())
+				{
+					std::size_t pivot = result % out_buffer.size();
+					std::rotate(out_buffer.begin(), out_buffer.begin() + pivot, out_buffer.end());
+				}
+				std::reverse(out_buffer.begin(), out_buffer.begin() + std::min(std::size_t(result), out_buffer.size()));
+			}
+			return int(result);
+		}
+
+		template <typename visited_dictionary>
+		int fill_output(const visited_dictionary& visited,
+			int local_start_index, typename visited_dictionary::const_iterator it_end_node,
+			std::vector<int>& out_buffer)
+		{
+			out_buffer.clear();
+			auto visited_end = visited.end();
+			while (it_end_node != visited_end && it_end_node->first != local_start_index)
 			{
 				out_buffer.push_back(it_end_node->first);
+				it_end_node = visited.find(it_end_node->second.map_index);
 			}
-			else
+			if (out_buffer.size())
 			{
-				out_buffer[result % out_buffer.size()] = it_end_node->first;
+				std::reverse(out_buffer.begin(), out_buffer.end());
 			}
-			result++;
-
-			it_end_node = visited.find(it_end_node->second.map_index);
+			return int(out_buffer.size());
 		}
-		if (out_buffer.size())
+
+		template <typename visited_dictionary>
+		int fill_output_inverted(const visited_dictionary& visited,
+			int local_end_index,
+			typename visited_dictionary::const_iterator it_end_node,
+			astd::array_ref<int>& out_buffer)
 		{
-			if (result > out_buffer.size())
+			int result = 0;
+			auto visited_end = visited.end();
+			it_end_node = visited.find(it_end_node->second.map_index);
+
+			while (it_end_node != visited_end)
 			{
-				std::size_t pivot = result % out_buffer.size();
-				std::rotate(out_buffer.begin(), out_buffer.begin() + pivot, out_buffer.end());
+				if (out_buffer.size() > 0 && std::size_t(result) < out_buffer.size())
+				{
+					out_buffer[result] = it_end_node->first;
+				}
+				result++;
+				if (it_end_node->first != local_end_index)
+					it_end_node = visited.find(it_end_node->second.map_index);
+				else
+					it_end_node = visited.end();
 			}
-			std::reverse(out_buffer.begin(), out_buffer.begin() + std::min(result, out_buffer.size()));
+			return int(result);
 		}
-		return int(result);
-	}
 
-	template <typename visited_dictionary>
-	int fill_output(const visited_dictionary& visited,
-		std::size_t local_start_index, typename visited_dictionary::const_iterator it_end_node,
-		std::vector<std::size_t>& out_buffer)
-	{
-		out_buffer.clear();
-		auto visited_end = visited.end();
-		while (it_end_node != visited_end && it_end_node->first != local_start_index)
+		template <typename visited_dictionary, std::size_t static_size>
+		int fill_output_inverted(const visited_dictionary& visited, 
+			int local_end_index,
+			typename visited_dictionary::const_iterator it_end_node,
+			xts::static_vector<int, static_size>& out_buffer)
 		{
-			out_buffer.push_back(it_end_node->first);
+			out_buffer.clear();
+			int result = 0;
+			auto visited_end = visited.end();
 			it_end_node = visited.find(it_end_node->second.map_index);
+
+			while (it_end_node != visited_end)
+			{
+				if (out_buffer.size() < out_buffer.max_size())
+				{
+					out_buffer.push_back(it_end_node->first);
+				}
+				result++;
+
+				if (it_end_node->first != local_end_index)
+					it_end_node = visited.find(it_end_node->second.map_index);
+				else
+					it_end_node = visited.end();
+			}
+			return int(result);
 		}
-		if (out_buffer.size())
+
+		template <typename visited_dictionary>
+		int fill_output_inverted(const visited_dictionary& visited,
+			int local_end_index,
+			typename visited_dictionary::const_iterator it_end_node,
+			std::vector<int>& out_buffer)
 		{
-			std::reverse(out_buffer.begin(), out_buffer.end());
+			out_buffer.clear();
+			auto visited_end = visited.end();
+			it_end_node = visited.find(it_end_node->second.map_index);
+
+			while (it_end_node != visited_end)
+			{
+				out_buffer.push_back(it_end_node->first);
+				if (it_end_node->first != local_end_index)
+					it_end_node = visited.find(it_end_node->second.map_index);
+				else
+					it_end_node = visited.end();
+			}
+
+			return int(out_buffer.size());
 		}
-		return int(out_buffer.size());
+
+
+		template <typename grid_type>
+		bool can_salvage_previous_find(const grid_type& grid,
+			int start, int end)
+		{
+			static thread_local int static_hash = 0;
+			static thread_local int static_start = 0;
+			static thread_local int static_end = 0;
+			static thread_local int static_width = 0;
+			static thread_local int static_height = 0;
+
+			std::hash<grid_type> hasher;
+			std::size_t hash = hasher(grid);
+
+			if (start != static_start || end != static_end ||
+				static_width != grid.width() || static_height != grid.height()
+				|| hash != static_hash)
+			{
+				static_start = start;
+				static_end = end;
+				static_width = grid.width();
+				static_height = grid.height();
+				static_hash = hash;
+				return false;
+			}
+			return true;
+		}
+
+		template <typename find_nearby_square, typename heuristic, typename grid_type, typename movement_cost, typename index_data>
+		auto find_path(int local_start_index, int local_end_index, std::unordered_map<int, index_data>& visited
+						, std::priority_queue<index_data, std::vector<index_data>, a_star::_impl::coord_data_greater_cost>& opened, const grid_type& grid)
+		{
+			typedef typename std::unordered_map<int, index_data>::value_type visited_value_type;
+			bool found = false;
+			auto end_node = visited.end();
+
+			opened.push(index_data{ local_start_index, 0 });
+			visited[local_start_index] = { {/*no previous coordinate*/ }, 0 };
+
+			while (opened.size() && !found)
+			{
+				index_data top = opened.top();
+				opened.pop();
+
+				auto nearby_square = find_nearby_square::invoke(grid, top.map_index);
+				auto nearby_beg = nearby_square.begin();
+				auto nearby_end = nearby_square.end();
+				while (nearby_beg != nearby_end && !found)
+				{
+					if (*nearby_beg == local_end_index)
+					{
+						found = true;
+						end_node = visited.insert(visited_value_type{ *nearby_beg, index_data{ top.map_index, 0 } }).first;
+					}
+					else
+					{
+						index_data& previous_neighbor_value = visited[*nearby_beg]; //<- performance hog
+
+						int neighbor_actual_cost = visited[top.map_index].cost + movement_cost::invoke(grid, top.map_index, *nearby_beg);
+						if (neighbor_actual_cost < previous_neighbor_value.cost)
+						{
+							previous_neighbor_value.cost = neighbor_actual_cost;
+							previous_neighbor_value.map_index = top.map_index;
+							auto heuristic = heuristic::invoke(grid.coord_from_index(local_end_index),
+								grid.coord_from_index(*nearby_beg));
+							opened.push(index_data{ *nearby_beg, neighbor_actual_cost + heuristic });
+						}
+						++nearby_beg;
+					}
+				}
+			}
+			return std::make_pair(found, end_node);
+		}
 	}
-
-	template <typename grid_type>
-	bool can_salvage_previous_find(const grid_type& grid,
-		std::size_t start, std::size_t end)
-	{
-		static thread_local std::size_t static_hash = 0;
-		static thread_local std::size_t static_start = 0;
-		static thread_local std::size_t static_end = 0;
-		static thread_local std::size_t static_width = 0;
-		static thread_local std::size_t static_height = 0;
-
-		std::hash<grid_type> hasher;
-		std::size_t hash = hasher(grid);
-
-		if (start != static_start || end != static_end ||
-			static_width != grid.width() || static_height != grid.height()
-			|| hash != static_hash)
-		{
-			static_start = start;
-			static_end = end;
-			static_width = grid.width();
-			static_height = grid.height();
-			static_hash = hash;
-			return false;
-		}
-		return true;
-	}	
 
 	//If you can guarrantee a valid waypoint, divide the map in two, and run it in parallel.
 	template <typename find_nearby_square, typename heuristic, typename grid_type, typename movement_cost
@@ -151,8 +273,8 @@ namespace a_star {
 		assert(grid.coordinate_valid(start));
 		assert(grid.coordinate_valid(end));
 
-		std::size_t local_start_index = grid.index_from_coord(start);
-		std::size_t local_end_index = grid.index_from_coord(end);
+		int local_start_index = grid.index_from_coord(start);
+		int local_end_index = grid.index_from_coord(end);
 
 		if (grid[local_start_index] == 0
 			|| grid[local_end_index] == 0)
@@ -166,9 +288,9 @@ namespace a_star {
 			return 0;
 		}
 
-		typedef a_star::index_data<heuristic::value> index_data;
-		typedef std::unordered_map<std::size_t, index_data> visited_dictionnary; //TODO: try later with boost::flat_map
-		typedef std::priority_queue<index_data, std::vector<index_data>, a_star::coord_data_greater_cost> opened_deck;
+		typedef a_star::_impl::index_data<heuristic::value> index_data;
+		typedef std::unordered_map<int, index_data> visited_dictionnary; //TODO: try later with boost::flat_map
+		typedef std::priority_queue<index_data, std::vector<index_data>, a_star::_impl::coord_data_greater_cost> opened_deck;
 
 		static thread_local visited_dictionnary visited;
 		static thread_local std::vector<index_data> deck_container;
@@ -181,7 +303,7 @@ namespace a_star {
 
 		//sadly I can't debug possible collisions in kattis but my hashing function seems solid
 		if (grid.size() < 64 ||
-			!a_star::can_salvage_previous_find(grid, local_start_index, local_end_index))
+			!a_star::_impl::can_salvage_previous_find(grid, local_start_index, local_end_index))
 		{
 			std::uint64_t max_prealloc = std::numeric_limits<int>::max() / (sizeof(int) * 70);
 			std::uint64_t min_prealloc = 1024;
@@ -190,53 +312,42 @@ namespace a_star {
 			visited.reserve(hopeful_preallocation);
 			deck_container.clear();
 			deck_container.reserve(hopeful_preallocation);
-			opened = opened_deck(a_star::coord_data_greater_cost(), deck_container);
+			opened = opened_deck(a_star::_impl::coord_data_greater_cost(), deck_container);
 			found = false;
 			end_node = visited.end();
 		}
 
-		opened.push(index_data{ local_start_index, 0 });
-		visited[local_start_index] = { {/*no previous coordinate*/ }, 0 };
-
-		while (opened.size() && !found)
+		int result = -1;
+		
+		/*constexpr*/ if (movement_cost::op_type == xts::operation_type::commutative && heuristic::op_type == xts::operation_type::commutative)
 		{
-			index_data top = opened.top();
-			opened.pop();
-
-			auto nearby_square = find_nearby_square::invoke(grid, top.map_index);
-			auto nearby_beg = nearby_square.begin();
-			auto nearby_end = nearby_square.end();
-			while (nearby_beg != nearby_end && !found)
+			if (!found)
 			{
-				if (*nearby_beg == local_end_index)
-				{
-					found = true;
-					end_node = visited.insert(visited_dictionnary::value_type{ *nearby_beg, index_data{ top.map_index, 0 } }).first;
-				}
-				else
-				{
-					index_data& previous_neighbor_value = visited[*nearby_beg]; //<- performance hog
-
-					std::size_t neighbor_actual_cost = visited[top.map_index].cost + movement_cost::invoke(grid, top.map_index, *nearby_beg);
-					if (neighbor_actual_cost < previous_neighbor_value.cost)
-					{
-						previous_neighbor_value.cost = neighbor_actual_cost;
-						previous_neighbor_value.map_index = top.map_index;
-						auto heuristic = heuristic::invoke(end,
-							grid.coord_from_index(*nearby_beg));
-						opened.push(index_data{ *nearby_beg, neighbor_actual_cost + heuristic });
-					}
-					++nearby_beg;
-				}
+				/*(found, end_node)*/ auto find_result = _impl::find_path<find_nearby_square, heuristic, grid_type, movement_cost>(local_end_index, local_start_index, visited, opened, grid);
+				found = find_result.first;
+				end_node = find_result.second;
+			}
+			if (found)
+			{
+				result = a_star::_impl::fill_output_inverted(visited, local_end_index, end_node, output);
+			}
+		}
+		else
+		{
+			if (!found)
+			{
+				/*(found, end_node)*/ auto find_result = _impl::find_path<find_nearby_square, heuristic, grid_type, movement_cost>(local_start_index, local_end_index, visited, opened, grid);
+				found = find_result.first;
+				end_node = find_result.second;
+			}
+			if (found)
+			{
+				result = a_star::_impl::fill_output(visited, local_start_index, end_node, output);
 			}
 		}
 
-		int result = -1;
-		if (found)
-		{
-			result = a_star::fill_output(visited, local_start_index, end_node, output);
-		}
 		return result;
+
 	}
 
 
@@ -245,10 +356,10 @@ namespace a_star {
 		const typename grid_type::coord_type& start,
 		const typename grid_type::coord_type& end,
 		const grid_type& grid,
-		std::size_t(&output_buffer)[output_array_size])
+		int(&output_buffer)[output_array_size]) 
 	{
-		return find_path<find_nearby_square, heuristic, grid_type, movement_cost, astd::array_ref<std::size_t>>
-			(start, end, grid, astd::array_ref<std::size_t>(output_buffer));
+		return find_path<find_nearby_square, heuristic, grid_type, movement_cost, astd::array_ref<int>>
+			(start, end, grid, astd::array_ref<int>(output_buffer));
 	}
 }
 

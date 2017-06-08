@@ -89,7 +89,7 @@ static void test_operation()
    astd::string_view v = "Hello, world";
 
    {
-     std::string str = v.to_string();
+	  std::string str = std::string(v);
       CHECK(str == v);
    }
 

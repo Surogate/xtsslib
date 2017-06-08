@@ -150,6 +150,7 @@ namespace astd
          _data += value;
          _size -= value;
       }
+
       void remove_suffix(std::size_t value)
       {
 #ifdef _DEBUG
@@ -158,6 +159,7 @@ namespace astd
 #endif
          _size -= value;
       }
+
       constexpr void swap(array_view& view) const noexcept
       {
          std::swap(_data, view._data);

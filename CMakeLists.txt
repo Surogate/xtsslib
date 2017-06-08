@@ -25,6 +25,14 @@ endif(${BOOST_ROOT_DIR} EQUAL ${PROJECT_SOURCE_DIR})
 include_directories("${PROJECT_SOURCE_DIR}")
 include_directories("${CATCH_ROOT_DIR}/include")
 
+if (WIN32)
+add_definitions(/DCATCH_CPP14_OR_GREATER)
+add_definitions(/std:c++latest)
+else (WIN32)
+add_definitions(-DCATCH_CPP14_OR_GREATER)
+add_definitions(-std=c++17)
+endif(WIN32)
+
 # sources in the resolver_server directory
 set (XTSSLIB_SOURCES 
 	${PROJECT_SOURCE_DIR}/test/main.cpp

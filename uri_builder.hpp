@@ -111,26 +111,27 @@ namespace xts
       std::vector<string_type> fragments;
 
    private:
-      std::string assemble_authority() const
-      {
-         std::string hostinfo;
-         
+	  string_type assemble_authority() const
+      {	
          if (hostname.size())
          {
-            hostinfo = hostname;
+			 string_type result;
+			 result.reserve(128);
+			 result += "//";
+
+			 if (username.size())
+			 {
+				 result += username;
+				 if (password.size())
+					 result += ':' + password;
+				 result += '@';
+			 }
+
+            result += hostname;
             if (port > 0)
-               hostinfo += ':' + std::to_string(port);
+               result += ':' + std::to_string(port);
 
-            std::string userinfo;
-
-            if (username.size())
-            {
-               userinfo = username;
-               if (password.size())
-                  userinfo += ':' + password;
-               userinfo += '@';
-            }
-            return "//" + userinfo + hostinfo;
+            return result;
          }        
          return {};
       }
@@ -141,7 +142,7 @@ namespace xts
          std::vector<string_type> result;
          while (begin != end)
          {
-            result.emplace_back((*begin).to_string());
+            result.emplace_back((*begin));
             ++begin;
          }
          return result;
