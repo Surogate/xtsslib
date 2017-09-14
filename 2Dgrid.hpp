@@ -4,11 +4,11 @@
 #include <cstddef>
 #include <cstdlib>
 #include "matrix.hpp"
-#include "static_vector.hpp"
 #include "aarray_view.hpp"
 #include <array>
 #include <functional>
 #include "operation_type.hpp"
+#include "fixed/vector.hpp"
 
 namespace grid2d {
 	using index_t = int;
@@ -125,17 +125,17 @@ namespace grid2d {
 	struct nearby_square_non_diag
 	{
 		template <typename T>
-		xts::static_vector<index_t, 4> operator()(const grid_view<T>& grid,
+		fixed::vector<index_t, 4> operator()(const grid_view<T>& grid,
 			index_t pos) const
 		{
 			return invoke(grid, pos);
 		}
 
 		template <typename T>
-		static xts::static_vector<index_t, 4> invoke(const grid_view<T>& grid,
+		static fixed::vector<index_t, 4> invoke(const grid_view<T>& grid,
 			index_t pos)
 		{
-			xts::static_vector<index_t, 4> result;
+			fixed::vector<index_t, 4> result;
 			coord xy = grid.coord_from_index(pos);
 
 			if (grid_view<T>::size_type(xy[0] + 1) < grid.width() && square_validation::invoke(grid, pos + 1))

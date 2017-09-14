@@ -2,7 +2,6 @@
 #define ASTAR_HPP
 
 #include "aarray_view.hpp"
-#include "static_vector.hpp"
 #include "operation_type.hpp"
 #include <vector>
 
@@ -62,7 +61,7 @@ namespace a_star {
 		template <typename visited_dictionary, std::size_t static_size>
 		int fill_output(const visited_dictionary& visited,
 			int local_start_index, typename visited_dictionary::const_iterator it_end_node,
-			xts::static_vector<int, static_size>& out_buffer)
+			fixed::vector<int, static_size>& out_buffer)
 		{
 			out_buffer.clear();
 			int result = 0;
@@ -141,7 +140,7 @@ namespace a_star {
 		int fill_output_inverted(const visited_dictionary& visited, 
 			int local_end_index,
 			typename visited_dictionary::const_iterator it_end_node,
-			xts::static_vector<int, static_size>& out_buffer)
+			fixed::vector<int, static_size>& out_buffer)
 		{
 			out_buffer.clear();
 			int result = 0;

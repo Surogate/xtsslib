@@ -16,7 +16,6 @@
 #include <future>
 
 #include "catch.hpp"
-#include "static_vector.hpp"
 #include "2Dgrid.hpp"
 #include "astar.hpp"
 #include "operation_type.hpp"
@@ -390,9 +389,9 @@ void basic_test_a_star()
 			1, 1, 1, 1, 1
 		};
 
-		std::array<xts::static_vector<grid2d::index_t, 4>, 5 * 5> valid_squares =
+		std::array<fixed::vector<grid2d::index_t, 4>, 5 * 5> valid_squares =
 		{
-		xts::static_vector<grid2d::index_t, 4>
+			fixed::vector<grid2d::index_t, 4>
 		{1u, 5u},{ 2u, 6u, 0u },{ 3u, 7u, 1u },{ 4u, 2u },{ 9u, 3u },
 		{ 6u, 10u, 0u },{ 7u, 11u, 5u, 1u },{ 12u, 6u, 2u },{ 9u, 7u, 3u },{ 14u, 4u },
 		{ 11u, 15u, 5u },{ 12u, 10u, 6u },{ 11u, 7u },{ 14u, 12u },{ 19u, 9u },
@@ -733,7 +732,7 @@ void basic_test_a_star()
 		};
 
 		int pOutBuffer[15];
-		xts::static_vector<int, 15> static_output;
+		fixed::vector<int, 15> static_output;
 		std::vector<int> dyn_output;
 
 		auto value1 = a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to>({ 1, 4 }, { 8, 2 }, { pMap, 10, 5 }, pOutBuffer);

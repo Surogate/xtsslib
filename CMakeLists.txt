@@ -12,18 +12,12 @@ set (XTSSLIB_VERSION_MINOR 1)
 set(BOOST_ROOT_DIR ${PROJECT_SOURCE_DIR} CACHE STRING "The root directory of boost, leave it as is if you initialized subrepositories")
 set(CATCH_ROOT_DIR ${PROJECT_SOURCE_DIR}/../Catch/ CACHE STRING "The root directory of boost, leave it as is if you initialized subrepositories")
 
-if (${BOOST_ROOT_DIR} EQUAL ${PROJECT_SOURCE_DIR})
-	include_directories("${PROJECT_SOURCE_DIR}/utility/include")
-	include_directories("${PROJECT_SOURCE_DIR}/config/include")
-	include_directories("${PROJECT_SOURCE_DIR}/throw_exception/include")
-	include_directories("${PROJECT_SOURCE_DIR}/assert/include")
-else (${BOOST_ROOT_DIR} EQUAL ${PROJECT_SOURCE_DIR})
-	include_directories("${BOOST_ROOT_DIR}")
-endif(${BOOST_ROOT_DIR} EQUAL ${PROJECT_SOURCE_DIR})
+include_directories("${BOOST_ROOT_DIR}")
 
 # directories where to search headers
 include_directories("${PROJECT_SOURCE_DIR}")
 include_directories("${CATCH_ROOT_DIR}/include")
+include_directories("${PROJECT_SOURCE_DIR}/fixed-container/include")
 
 if (WIN32)
 add_definitions(/DCATCH_CPP14_OR_GREATER)
