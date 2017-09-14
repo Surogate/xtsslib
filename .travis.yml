@@ -29,6 +29,7 @@ install:
     travis_retry git clone --depth 1 --recursive ${BOOST_URL} ${BOOST_DIR} || exit 1
           (cd ${BOOST_DIR} && ./bootstrap.sh && ./b2 headers) || exit 1
     CMAKE_OPTIONS+=" -DBOOST_ROOT=${BOOST_DIR}"
+  - cd ${TRAVIS_BUILD_DIR}
 
 script:
   - mkdir bin
