@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.7)
+cmake_minimum_required (VERSION 3.2)
 
 #input: a list of the boost library needed, can be empty
 #output: Boost_LIBRARY_DIRS to be used with link_directories

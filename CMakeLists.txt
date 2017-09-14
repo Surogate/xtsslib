@@ -6,7 +6,6 @@ project (xtsslib)
 set (XTSSLIB_VERSION_MAJOR 0)
 set (XTSSLIB_VERSION_MINOR 1)
 
-
 include ("utility.cmake")
 
 find_boost_lib()
