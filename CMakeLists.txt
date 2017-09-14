@@ -2,9 +2,6 @@ cmake_minimum_required (VERSION 3.2)
 
 project (xtsslib)
 
-#compiler requirement
-set (CMAKE_CXX_STANDARD 14)
-
 # the version number
 set (XTSSLIB_VERSION_MAJOR 0)
 set (XTSSLIB_VERSION_MINOR 1)
@@ -28,9 +25,6 @@ else (WIN32)
 add_definitions(-std=c++17)
 add_definitions(-DCATCH_CPP14_OR_GREATER)
 endif(WIN32)
-
-add_definitions(/DCATCH_CPP14_OR_GREATER)
-
 
 # sources in the resolver_server directory
 set (XTSSLIB_SOURCES 
