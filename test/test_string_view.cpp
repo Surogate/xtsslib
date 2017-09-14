@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
+#include <iterator>
 #include "astring_view.hpp"
+#include "compatibility.hpp"
 #include "catch.hpp"
 
 static void test_constructor()

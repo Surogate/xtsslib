@@ -1,7 +1,7 @@
 #ifndef XTS_COMPATIBILITY_HPP
 #define XTS_COMPATIBILITY_HPP
 
-#if (defined _MSC_VER && _MSC_VER < 1910) or not defined _MSC_VER
+#if (defined _MSC_VER && _MSC_VER < 1910) || !defined(_MSC_VER)
 namespace stdext
 {
 	template <typename T>

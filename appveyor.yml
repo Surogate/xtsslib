@@ -1,6 +1,6 @@
 image:
 - Visual Studio 2017
-clone_folder: C:\project\fixed-container
+clone_folder: C:\project\xtsslib
 build_script:
 - cmd: >-
     mkdir build

@@ -9,23 +9,28 @@ set (CMAKE_CXX_STANDARD 14)
 set (XTSSLIB_VERSION_MAJOR 0)
 set (XTSSLIB_VERSION_MINOR 1)
 
-set(BOOST_ROOT_DIR ${PROJECT_SOURCE_DIR} CACHE STRING "The root directory of boost, leave it as is if you initialized subrepositories")
-set(CATCH_ROOT_DIR ${PROJECT_SOURCE_DIR}/../Catch/ CACHE STRING "The root directory of boost, leave it as is if you initialized subrepositories")
 
-include_directories("${BOOST_ROOT_DIR}")
+include ("utility.cmake")
+
+find_boost_lib()
+
+include_directories("${Boost_INCLUDE_DIRS}")
 
 # directories where to search headers
 include_directories("${PROJECT_SOURCE_DIR}")
-include_directories("${CATCH_ROOT_DIR}/include")
+include_directories("${PROJECT_SOURCE_DIR}/test")
 include_directories("${PROJECT_SOURCE_DIR}/fixed-container/include")
 
 if (WIN32)
-add_definitions(/DCATCH_CPP14_OR_GREATER)
 add_definitions(/std:c++latest)
+add_definitions(/DCATCH_CPP14_OR_GREATER)
 else (WIN32)
-add_definitions(-DCATCH_CPP14_OR_GREATER)
 add_definitions(-std=c++17)
+add_definitions(-DCATCH_CPP14_OR_GREATER)
 endif(WIN32)
+
+add_definitions(/DCATCH_CPP14_OR_GREATER)
+
 
 # sources in the resolver_server directory
 set (XTSSLIB_SOURCES 
