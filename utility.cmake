@@ -4,10 +4,10 @@ cmake_minimum_required (VERSION 3.2)
 #output: Boost_LIBRARY_DIRS to be used with link_directories
 #output: Boost_INCLUDE_DIRS to be used with include_directories
 #output: Boost_LIBRARIES to be used with target_link_libraries
-function(find_boost_lib)	
-	if (${UNIX} OR ${APPLE})
+function(find_boost_lib)
+	if (${UNIX} || ${APPLE})
 		find_package(Boost REQUIRED COMPONENTS ${ARGN})
-	else (${UNIX} OR ${APPLE})
+	else (${UNIX} || ${APPLE})
 		set(BOOST_DIR ${PROJECT_SOURCE_DIR} CACHE PATH "The root directory of boost, leave it as is if you initialized subrepositories")
 		set (BOOST_LIBRARY_DIR "${BOOST_DIR}/stage/lib" CACHE PATH "The directory where boost lib are generated")
 		set(BOOST_ROOT "${BOOST_DIR}")
@@ -24,7 +24,7 @@ function(find_boost_lib)
 		endif (${GEN_BOOST_MT_LIB})
 		
 		find_package(Boost REQUIRED COMPONENTS ${ARGN})
-	endif (${UNIX} OR ${APPLE})
+	endif (${UNIX} || ${APPLE})
 	
 	set(Boost_INCLUDE_DIRS ${Boost_INCLUDE_DIRS} PARENT_SCOPE)
 	set(Boost_LIBRARY_DIRS ${Boost_LIBRARY_DIRS} PARENT_SCOPE)
