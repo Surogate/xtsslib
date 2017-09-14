@@ -13,6 +13,8 @@ matrix:
           packages:
             - g++-6
             - cppcheck
+            - libboost
+            - libcatch
       env:
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
 
