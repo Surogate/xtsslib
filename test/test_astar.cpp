@@ -301,7 +301,7 @@ std::pair<int, double> max_a_star(int nMapWidth, int nMapHeight)
 		}
 	}
 
-	return { success, diff.count() };
+	return { success, diff .count() };
 }
 
 template <grid_type::size_type side_map_size>
@@ -361,7 +361,7 @@ void profiling_performance()
 	{
 		int success_percent = 0;
 		double total_time = 0;
-		for (int num = 0; num < 1000; num++)
+		for (int num = 0; num < 100; num++)
 		{
 			auto result = max_a_star(i, i);
 			if (result.first != -1)

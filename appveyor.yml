@@ -1,0 +1,16 @@
+image:
+- Visual Studio 2017
+clone_folder: C:\project\fixed-container
+build_script:
+- cmd: >-
+    mkdir build
+
+    cd build
+    
+    cmake C:\project\xtsslib -G "Visual Studio 15"
+    
+    cmake --build .
+    
+    C:\project\xtsslib\build\Debug\xtsslib_test.exe
+
+

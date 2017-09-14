@@ -1,0 +1,28 @@
+dist: trusty
+sudo: false
+language: cpp
+
+matrix:
+  include:
+    # works on Precise and Trusty
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+            - cppcheck
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+
+before_install:
+    - eval "${MATRIX_EVAL}"
+
+script:
+  - mkdir bin
+  - cd bin/
+  - cmake ..
+  - scan-build cmake --build . -- -j2
+  - ./xtsslib_test
+  - cppcheck --quiet --error-exitcode=1 -f -I include/ ./test/*.cpp

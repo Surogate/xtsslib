@@ -25,6 +25,7 @@ namespace filesystem
    using std::experimental::filesystem::file_size;
    using std::experimental::filesystem::create_directory;
    using std::experimental::filesystem::create_directories;
+   using std::experimental::filesystem::copy_file;
 
    struct path_hasher
    {
@@ -127,6 +128,7 @@ namespace filesystem
    using boost::filesystem::create_directory;
    using boost::filesystem::create_directories;
    using boost::filesystem::hash_value;
+   using boost::filesystem::copy_file;
 }
 }
 

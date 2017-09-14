@@ -33,6 +33,11 @@ namespace astd
 	  array_view& operator=(array_view&& view) = default;
       array_view(const array_view& view) = default;
       array_view(array_view&& view) = default;
+	  array_view(std::initializer_list<T> list)
+	  {
+		  _data = list.begin();
+		  _size = list.size();
+	  }
 
       template< std::size_t SIZE>
       array_view(const T(&static_ptr)[SIZE])

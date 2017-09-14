@@ -2,14 +2,14 @@
 #ifndef PARSERLL
 #define PARSERLL
 
-#include <string>
+#include "astring_view.hpp"
 
 namespace xts {
 
    class ParserLL
    {
    public:
-      ParserLL(std::string buffer)
+      ParserLL(astd::string_view buffer)
          : _index(0), _buffer(buffer)
       {}
 
@@ -23,7 +23,7 @@ namespace xts {
          return (!eof() && _buffer[_index] == c);
       }
 
-      bool parse(char c)
+      bool consume(char c)
       {
          if (peek(c))
          {
@@ -33,7 +33,7 @@ namespace xts {
          return false;
       }
 
-      bool peek(std::string s)
+      bool peek(astd::string_view s)
       {
          unsigned int i = 0;
          while (i < s.size() && _index + i < _buffer.size() && _buffer[_index + i] == s[i])
@@ -43,7 +43,7 @@ namespace xts {
          return (i >= s.size());
       }
 
-      bool parse(std::string s)
+      bool consume(astd::string_view s)
       {
          if (peek(s))
          {
@@ -60,7 +60,7 @@ namespace xts {
 
       bool parse_endl()
       {
-         return parse("\n") || parse("\r\n") || parse("\r");
+         return consume("\n") || consume("\r\n") || consume("\r");
       }
 
       bool peek_between(char start, char end)
@@ -80,39 +80,49 @@ namespace xts {
 
       bool ignoreBlanks()
       {
-         while (parse('\r') || parse('\n') || parse(' ') || parse('\t'));
+         while (consume('\r') || consume('\n') || consume(' ') || consume('\t'));
          return true;
       }
 
       bool tryignoreBlanks()
       {
-         if (parse('\r') || parse('\n') || parse(' ') || parse('\t'))
+         if (consume('\r') || consume('\n') || consume(' ') || consume('\t'))
          {
-            while (parse('\r') || parse('\n') || parse(' ') || parse('\t'));
+            while (consume('\r') || consume('\n') || consume(' ') || consume('\t'));
             return true;
          }
          return false;
-
       }
 
-      bool ignoreUntil(std::string p)
+      bool ignoreUntil(astd::string_view p)
       {
          while (!peek(p))
          {
             _index++;
          }
-         return parse(p);
+         return consume(p);
       }
 
-      bool parseintoUntil(std::string limiter, std::string& into)
+	  bool parseintoSize(std::size_t num, astd::string_view& into)
+	  {
+		  bool result = _buffer.size() - _index >= num;
+		  if (result)
+		  {
+			   into = _buffer.substr(_index, num);
+			   _index += num;
+		  }
+		  return result;
+	  }
+
+      bool parseintoUntil(astd::string_view limiter, astd::string_view& into)
       {
          int _index_tmp = _index;
          while (!peek(limiter))
          {
             _index++;
          }
-         into += _buffer.substr(_index_tmp, _index - _index_tmp);
-         if (parse(limiter))
+         into = _buffer.substr(_index_tmp, _index - _index_tmp);
+         if (consume(limiter))
          {
             return true;
          }
@@ -120,9 +130,29 @@ namespace xts {
          return false;
       }
 
+	  template <typename T>
+	  bool fill(T& value)
+	  {
+		  bool result = sizeof(T) < (_buffer.size() - _index);
+		  if (result)
+		  {
+			  value = *(reinterpret_cast<const T*>(_buffer.data() + _index));
+		  }
+		  return result;
+	  }
+
+	  template <typename T>
+	  bool fconsume(T& value)
+	  {
+		  bool result = fill(value);
+		  if (result)
+			  _index += sizeof(T);
+		  return result;
+	  }
+
    protected:
-      unsigned int _index;
-      std::string _buffer;
+      std::size_t _index;
+	  astd::string_view _buffer;
    };
 
 }
