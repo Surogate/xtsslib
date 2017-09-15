@@ -425,7 +425,8 @@ void basic_test_a_star()
 		0, 1 };
 		int pOutBuffer[7];
 		int pOutBuffer2[7];
-		auto value = a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to>({ 0, 0 }, { 1, 1 }, { pMap, 2, 2 }, astd::array_ref<int>(pOutBuffer));
+		astd::array_ref<int> output(pOutBuffer);
+		auto value = a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to>({ 0, 0 }, { 1, 1 }, { pMap, 2, 2 }, output);
 		auto value2 = test_find_path(0, 0, 1, 1, { pMap, 2, 2 }, pOutBuffer2, 7);
 		REQUIRE(value == 2);
 		REQUIRE(value == value2);
@@ -645,7 +646,8 @@ void basic_test_a_star()
 
 		for (int i = 0; i < 20; i++)
 		{
-			auto value = a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to>({ 0, 0 }, { 9, 9 }, { pMap, 10, 10 }, astd::array_ref<int>(pOutBuffer, i));
+			astd::array_ref<int> output(pOutBuffer, i);
+			auto value = a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to>({ 0, 0 }, { 9, 9 }, { pMap, 10, 10 }, output);
 			REQUIRE(value == 20);
 			for (int expected_result_index = 0; expected_result_index < i; expected_result_index++)
 			{
@@ -670,8 +672,11 @@ void basic_test_a_star()
 		int pOutBuffer1[32];
 		int pOutBuffer2[16];
 
-		auto path1 = std::async(a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to, astd::array_ref<int>>, grid2d::coord{ 0, 0 }, grid2d::coord{ 4, 4 }, grid_type{ pMap, 10, 6 }, astd::array_ref<int>{pOutBuffer1});
-		auto path2 = std::async(a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to, astd::array_ref<int>>, grid2d::coord{ 4, 4 }, grid2d::coord{ 9, 0 }, grid_type{ pMap, 10, 6 }, astd::array_ref<int>{pOutBuffer2});
+		astd::array_ref<int> output1{ pOutBuffer1 };
+		astd::array_ref<int> output2{ pOutBuffer2 };
+
+		auto path1 = std::async(a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to, astd::array_ref<int>>, grid2d::coord{ 0, 0 }, grid2d::coord{ 4, 4 }, grid_type{ pMap, 10, 6 }, output1);
+		auto path2 = std::async(a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to, astd::array_ref<int>>, grid2d::coord{ 4, 4 }, grid2d::coord{ 9, 0 }, grid_type{ pMap, 10, 6 }, output2);
 		int size_out_1 = path1.get();
 		int size_out_2 = path2.get();
 		REQUIRE(size_out_1 == 8);
