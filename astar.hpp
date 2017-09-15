@@ -287,7 +287,7 @@ namespace a_star {
 			return 0;
 		}
 
-		typedef a_star::_impl::index_data<heuristic::value> index_data;
+		typedef a_star::_impl::index_data<typename heuristic::value> index_data;
 		typedef std::unordered_map<int, index_data> visited_dictionnary; //TODO: try later with boost::flat_map
 		typedef std::priority_queue<index_data, std::vector<index_data>, a_star::_impl::coord_data_greater_cost> opened_deck;
 
