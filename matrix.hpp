@@ -136,36 +136,6 @@ namespace xts
 	}
 
 	template <typename T, std::size_t column, std::size_t row>
-	matrix<T, column, row>& operator+=(matrix<T, column, row>& lval, const matrix<T, column, row>& rval)
-	{
-		std::transform(lval.begin(), lval.end(), rval.begin(), lval.begin(), [](const auto& inner_lval, const auto& inner_rval)
-		{
-			return inner_lval + inner_rval;
-		});
-		return lval;
-	}
-
-	template <typename T, std::size_t column, std::size_t row>
-	matrix<T, column, row>& operator-=(matrix<T, column, row>& lval, const matrix<T, column, row>& rval)
-	{
-		std::transform(lval.begin(), lval.end(), rval.begin(), lval.begin(), [](const auto& inner_lval, const auto& inner_rval)
-		{
-			return inner_lval - inner_rval;
-		});
-		return lval;
-	}
-
-	template <typename T, std::size_t column, std::size_t row>
-	matrix<T, column, row>& operator-(matrix<T, column, row>& mat)
-	{
-		std::for_each(lval.begin(), lval.end(), [](auto& val)
-		{
-			return val = -val;
-		});	
-		return mat;
-	}
-
-	template <typename T, std::size_t column, std::size_t row>
 	matrix<T, row, column> transpose(const matrix<T, column, row>& source)
 	{
 		matrix<T, row, column> result;

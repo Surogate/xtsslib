@@ -248,9 +248,9 @@ namespace a_star {
 						{
 							previous_neighbor_value.cost = neighbor_actual_cost;
 							previous_neighbor_value.map_index = top.map_index;
-							auto heuristic = heuristic::invoke(grid.coord_from_index(local_end_index),
+							auto h_value = heuristic::invoke(grid.coord_from_index(local_end_index),
 								grid.coord_from_index(*nearby_beg));
-							opened.push(index_data{ *nearby_beg, neighbor_actual_cost + heuristic });
+							opened.push(index_data{ *nearby_beg, neighbor_actual_cost + h_value });
 						}
 						++nearby_beg;
 					}

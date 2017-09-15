@@ -37,7 +37,7 @@ namespace grid2d {
 		{
 			int x_diff = rval[0] - lval[0];
 			int y_diff = rval[1] - lval[1];
-			return std::sqrtf(
+			return std::sqrt(
 				float(x_diff * x_diff + y_diff * y_diff)
 			);
 		}
