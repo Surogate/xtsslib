@@ -357,8 +357,9 @@ namespace a_star {
 		const grid_type& grid,
 		int(&output_buffer)[output_array_size]) 
 	{
+		astd::array_ref<int> output(output_buffer);
 		return find_path<find_nearby_square, heuristic, grid_type, movement_cost, astd::array_ref<int>>
-			(start, end, grid, astd::array_ref<int>(output_buffer));
+			(start, end, grid, output);
 	}
 }
 

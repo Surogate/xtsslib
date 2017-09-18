@@ -336,7 +336,7 @@ void test_map_hash()
 	auto end = hash.end();
 
 	while (beg != end)
-	{
+	{	
 		auto diff = std::find_if(beg, end, [beg](const std::uint64_t& val) {return val != *beg; });
 		collision_num += diff - beg - 1;
 		beg = diff;
@@ -413,7 +413,8 @@ void basic_test_a_star()
 		1, 0, 1 };
 		int pOutBuffer[7];
 		int pOutBuffer2[7];
-		auto value = a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to>(grid2d::coord{ 2, 0 }, grid2d::coord{ 0, 2 }, { pMap, 3, 3 }, astd::array_ref<int>(pOutBuffer));
+		astd::array_ref<int> output(pOutBuffer);
+		auto value = a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to>(grid2d::coord{ 2, 0 }, grid2d::coord{ 0, 2 }, { pMap, 3, 3 }, output);
 		auto value2 = test_find_path(2, 0, 0, 2, { pMap, 3, 3 }, pOutBuffer2, 7);
 		REQUIRE(value == -1);
 		REQUIRE(value == value2);
