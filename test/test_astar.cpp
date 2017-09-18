@@ -19,20 +19,7 @@
 #include "2Dgrid.hpp"
 #include "astar.hpp"
 #include "operation_type.hpp"
-
-//compatibility between vs2017 and gcc
-#ifndef _WIN32
-
-namespace stdext
-{
-	template <typename T>
-	inline T checked_array_iterator(T val, std::size_t)
-	{
-		return val;
-	}
-}
-
-#endif
+#include "compatibility.hpp"
 
 typedef grid2d::grid_view<unsigned char> grid_type;
 typedef grid2d::coord					coord_type;
@@ -217,8 +204,8 @@ int randomized_test_a_star()
 	const int nTargetX = X_value_distrib(generator);
 	const int nTargetY = Y_value_distrib(generator);
 
-	auto future1 = std::async(a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to, decltype(result_1)>,
-		grid2d::coord{ nStartX, nStartY }, grid2d::coord{ nTargetX, nTargetY }, grid_type{ map, nMapWidth, nMapHeight }, std::ref(result_1));
+	auto future1 = std::async(a_star::find_path<nearby_square_functor, heuristic, grid_type, movement_cost_to, std::vector<grid_type::index_type>>,
+		grid2d::coord{ nStartX, nStartY }, grid2d::coord{ nTargetX, nTargetY }, grid_type{ map, nMapWidth, nMapHeight }, result_1);
 	auto future2 = std::async(test_find_path, nStartX, nStartY, nTargetX, nTargetY, grid_type{ map, nMapWidth, nMapHeight }, &result_2[0], nOutBufferSize);
 
 	int size_1 = future1.get();
