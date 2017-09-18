@@ -138,11 +138,11 @@ namespace grid2d {
 			fixed::vector<index_t, 4> result;
 			coord xy = grid.coord_from_index(pos);
 
-			if (grid_view<T>::size_type(xy[0] + 1) < grid.width() && square_validation::invoke(grid, pos + 1))
+			if (typename grid_view<T>::size_type(xy[0] + 1) < grid.width() && square_validation::invoke(grid, pos + 1))
 			{
 				result.push_back(pos + 1);
 			}
-			if (grid_view<T>::size_type(xy[1] + 1) < grid.height() && square_validation::invoke(grid, pos + grid.width()))
+			if (typename grid_view<T>::size_type(xy[1] + 1) < grid.height() && square_validation::invoke(grid, pos + grid.width()))
 			{
 				result.push_back(pos + grid.width());
 			}
