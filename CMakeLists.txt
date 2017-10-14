@@ -28,15 +28,13 @@ endif(WIN32)
 # sources in the resolver_server directory
 set (XTSSLIB_SOURCES 
 	${PROJECT_SOURCE_DIR}/test/main.cpp
-	${PROJECT_SOURCE_DIR}/test/test_astar.cpp
 	${PROJECT_SOURCE_DIR}/test/test_matrix.cpp
 	${PROJECT_SOURCE_DIR}/test/test_string_view.cpp
 	${PROJECT_SOURCE_DIR}/test/test_uri.cpp
-	${PROJECT_SOURCE_DIR}/2Dgrid.hpp
+	
 	${PROJECT_SOURCE_DIR}/aarray_view.hpp
 	${PROJECT_SOURCE_DIR}/afilesystem.hpp
 	${PROJECT_SOURCE_DIR}/afilesystem_fwd.hpp
-	${PROJECT_SOURCE_DIR}/astar.hpp
 	${PROJECT_SOURCE_DIR}/astring_view.hpp
 	${PROJECT_SOURCE_DIR}/astring_view_fwd.hpp
 	${PROJECT_SOURCE_DIR}/compatibility.hpp
