@@ -6,6 +6,7 @@
 #include <cstddef>
 #include <cassert>
 #include <numeric>
+#include <cmath>
 #include "aarray_view.hpp"
 
 namespace xts
