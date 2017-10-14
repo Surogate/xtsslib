@@ -12,7 +12,9 @@ namespace stdext
 }
 #endif
 
-#ifndef _MSC_VER
+#if !defined _MSC_VER && __cplusplus < 201402L
+
+#include <memory>
 
 namespace std
 {
