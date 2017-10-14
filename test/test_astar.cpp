@@ -86,7 +86,7 @@ bool a_star_search
 			{
 				cost_so_far[next] = new_cost;
 
-				int priority = new_cost + graph.invoke_heuristic<heuristic>(current.map_index, next);
+				int priority = new_cost + graph.invoke_heuristic<grid2d::mahattan>(current.map_index, next);
 				frontier.push(index_data{ next, priority });
 				came_from[next] = current.map_index;
 			}
