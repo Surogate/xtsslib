@@ -50,4 +50,4 @@ script:
   - scan-build cmake --build . -- -j2
   - ./xtsslib_test
   - cd ..
-  - cppcheck --quiet --error-exitcode=1 -f -I. -I./test -I./interprocess -I./fixed-container/include ./test/*.cpp
+  - cppcheck --quiet --error-exitcode=1 -f -I. -I./test -I./interprocess ./test/*.cpp
