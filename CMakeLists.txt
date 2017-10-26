@@ -31,6 +31,7 @@ set (XTSSLIB_SOURCES
 	${PROJECT_SOURCE_DIR}/test/test_matrix.cpp
 	${PROJECT_SOURCE_DIR}/test/test_string_view.cpp
 	${PROJECT_SOURCE_DIR}/test/test_uri.cpp
+	${PROJECT_SOURCE_DIR}/test/test_vector_deck.cpp
 	
 	${PROJECT_SOURCE_DIR}/aarray_view.hpp
 	${PROJECT_SOURCE_DIR}/afilesystem.hpp
@@ -50,6 +51,7 @@ set (XTSSLIB_SOURCES
 	${PROJECT_SOURCE_DIR}/trim.hpp
 	${PROJECT_SOURCE_DIR}/uri.hpp
 	${PROJECT_SOURCE_DIR}/uri_builder.hpp
+	${PROJECT_SOURCE_DIR}/vector_deck.hpp
 	${PROJECT_SOURCE_DIR}/interprocess/linux_named_recursive_mutex.hpp
 	${PROJECT_SOURCE_DIR}/interprocess/named_recursive_mutex.hpp
 	${PROJECT_SOURCE_DIR}/interprocess/null_named_recursive_mutex.hpp
