@@ -6,9 +6,8 @@
 
 namespace xts
 {
-	std::vector<char> get_file_content(const astd::filesystem::path& path)
+	std::vector<char> get_file_content(std::ifstream& in)
 	{
-		std::ifstream in(path.c_str(), std::ios::in | std::ios::binary);
 		std::vector<char> result;
 
 		if (in)
@@ -20,11 +19,15 @@ namespace xts
 		}
 		return result;
 	}
-	
-	template<std::size_t SIZE>
-	std::pair<std::array<char, SIZE>, std::size_t> get_file_content_fixed(const astd::filesystem::path& path)
+
+	std::vector<char> get_file_content(const astd::filesystem::path& path)
 	{
-		std::ifstream in(path.c_str(), std::ios::in | std::ios::binary);
+		return get_file_content(std::ifstream(path.c_str(), std::ios::in | std::ios::binary));
+	}
+
+	template<std::size_t SIZE>
+	std::pair<std::array<char, SIZE>, std::size_t> get_file_content_fixed(std::ifstream& in)
+	{
 		std::array<char, SIZE> result;
 		std::size_t read = 0;
 
@@ -37,6 +40,12 @@ namespace xts
 			in.read(result.data(), result.size());
 		}
 		return std::make_pair(result, read);
+	}
+
+	template<std::size_t SIZE>
+	std::pair<std::array<char, SIZE>, std::size_t> get_file_content_fixed(const astd::filesystem::path& path)
+	{
+		return get_file_content_fixed(std::ifstream(path.c_str(), std::ios::in | std::ios::binary));
 	}
 
 }
