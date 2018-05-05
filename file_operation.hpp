@@ -6,7 +6,7 @@
 
 namespace xts
 {
-	std::vector<char> get_file_content(std::ifstream& in)
+	inline std::vector<char> get_file_content(std::ifstream& in)
 	{
 		std::vector<char> result;
 
@@ -20,7 +20,7 @@ namespace xts
 		return result;
 	}
 
-	std::vector<char> get_file_content(const astd::filesystem::path& path)
+	inline std::vector<char> get_file_content(const astd::filesystem::path& path)
 	{
 		return get_file_content(std::ifstream(path.c_str(), std::ios::in | std::ios::binary));
 	}
