@@ -1,9 +1,11 @@
 #ifndef AFILESYSTEM_HPP
 #define AFILESYSTEM_HPP
 
+
 #if _MSC_VER > 1700
 #include <experimental/filesystem>
 #include <system_error>
+#include <functional>
 
 namespace astd
 {
@@ -26,16 +28,21 @@ namespace filesystem
    using std::experimental::filesystem::create_directory;
    using std::experimental::filesystem::create_directories;
    using std::experimental::filesystem::copy_file;
+}
+}
 
-   struct path_hasher
-   {
-	   std::size_t operator()(const astd::filesystem::path& path) noexcept
-	   {
-		   return hash_value(path);
-	   }
-   };
+namespace std
+{
+	template <>
+	struct hash<astd::filesystem::path>
+	{
+		std::size_t operator()(const astd::filesystem::path& path) const noexcept
+		{
+			return hash_value(path);
+		}
+	};
 }
-}
+
 
 #else
 

@@ -1,6 +1,8 @@
 #ifndef ASTRING_VIEW_HEADER_HPP
 #define ASTRING_VIEW_HEADER_HPP
 
+#include <functional>
+
 #if _HAS_CXX17 //full standard
 #define STD_STRING_VIEW
 #include <string_view>
@@ -38,7 +40,6 @@ namespace astd
 }
 
 #ifdef BOOST_STRING_VIEW
-#include <functional>
 
 namespace std
 {
@@ -72,6 +73,11 @@ inline std::string operator+(const std::string& lhs, const astd::string_view& rh
   std::string result = lhs;
   result.append(rhs.data(), rhs.size());
   return result;
+}
+
+inline std::string to_string(astd::string_view& view)
+{
+	return std::string(view.begin(), view.end());
 }
 
 #endif //!ASTRING_VIEW_HEADER_HPP
