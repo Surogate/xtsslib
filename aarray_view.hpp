@@ -174,7 +174,7 @@ namespace astd
             _size -= value;
          }
 
-         constexpr void swap(array_view & view) const noexcept
+         constexpr void swap(array_view & view) noexcept
          {
             std::swap(_data, view._data);
             std::swap(_size, view._size);
