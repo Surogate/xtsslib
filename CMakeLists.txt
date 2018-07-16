@@ -8,9 +8,7 @@ set (XTSSLIB_VERSION_MINOR 1)
 
 include ("utility.cmake")
 
-find_boost_lib()
-
-include_directories("${Boost_INCLUDE_DIRS}")
+set (CMAKE_CXX_STANDARD 17)
 
 # directories where to search headers
 include_directories("${PROJECT_SOURCE_DIR}")
@@ -19,10 +17,8 @@ include_directories("${PROJECT_SOURCE_DIR}/fixed-container/include")
 
 if (WIN32)
 add_compile_options(/permissive-)
-add_compile_options(/std:c++17)
 add_definitions(/DCATCH_CPP14_OR_GREATER)
 else (WIN32)
-add_definitions(-std=c++17)
 add_definitions(-DCATCH_CPP14_OR_GREATER)
 endif(WIN32)
 
@@ -35,10 +31,6 @@ set (XTSSLIB_SOURCES
 	${PROJECT_SOURCE_DIR}/test/test_vector_deck.cpp
 	
 	${PROJECT_SOURCE_DIR}/aarray_view.hpp
-	${PROJECT_SOURCE_DIR}/afilesystem.hpp
-	${PROJECT_SOURCE_DIR}/afilesystem_fwd.hpp
-	${PROJECT_SOURCE_DIR}/astring_view.hpp
-	${PROJECT_SOURCE_DIR}/astring_view_fwd.hpp
 	${PROJECT_SOURCE_DIR}/compatibility.hpp
 	${PROJECT_SOURCE_DIR}/fast_convert.hpp
 	${PROJECT_SOURCE_DIR}/file_operation.hpp

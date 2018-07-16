@@ -2,7 +2,7 @@
 #include <string>
 #include <iterator>
 #include <algorithm>
-#include "astring_view.hpp"
+#include <string_view>
 #include "compatibility.hpp"
 #include "catch.hpp"
 
@@ -11,9 +11,9 @@ static void test_constructor()
    std::string cppstr = "Foo";
    char array[3] = { 'B', 'a', 'r' };
 
-   astd::string_view cppstr_v(cppstr);
-   astd::string_view array_v(array, 3);
-   astd::wstring_view wcstr_v = L"xyzzy";
+   std::string_view cppstr_v(cppstr);
+   std::string_view array_v(array, 3);
+   std::wstring_view wcstr_v = L"xyzzy";
 
    CHECK(cppstr == cppstr_v);
    CHECK(array_v == "Bar");
@@ -23,7 +23,7 @@ static void test_constructor()
 static void test_access()
 {
    std::string ref = "Hello, world";
-   astd::string_view v = "Hello, world";
+   std::string_view v = "Hello, world";
    for (std::size_t i = 0; i < v.size(); ++i)
    {
       CHECK(v[i] == ref[i]);
@@ -52,26 +52,26 @@ static void test_access()
 
 static void test_capacity()
 {
-   astd::string_view str("Test string");
+   std::string_view str("Test string");
    CHECK(str.size() == 11);
    CHECK(str.length() == 11);
    CHECK(str.max_size());
    CHECK(str.empty() == false);
-   CHECK(astd::string_view().empty() == true);
+   CHECK(std::string_view().empty() == true);
 }
 
 static void test_modifier()
 {
    {
       std::string str = "   trim me";
-      astd::string_view v = str;
+      std::string_view v = str;
       v.remove_prefix(std::min(v.find_first_not_of(" "), v.size()));
       CHECK(v == "trim me");
    }
    
    {
       char arr[] = { 'a', 'b', 'c', 'd', '\0', '\0', '\0' };
-      astd::string_view v(arr, sizeof arr);
+      std::string_view v(arr, sizeof arr);
       auto trim_pos = v.find('\0');
       if (trim_pos != std::string::npos)
          v.remove_suffix(v.size() - trim_pos);
@@ -79,8 +79,8 @@ static void test_modifier()
    }
 
    {
-      astd::string_view origin = "test";
-      astd::string_view target;
+      std::string_view origin = "test";
+      std::string_view target;
       target.swap(origin);
       CHECK(target == "test");
       CHECK(origin.empty());
@@ -89,7 +89,7 @@ static void test_modifier()
 
 static void test_operation()
 {
-   astd::string_view v = "Hello, world";
+   std::string_view v = "Hello, world";
 
    {
 	  std::string str = std::string(v);
@@ -118,8 +118,8 @@ static void test_operation()
       result = v.find(',', 6);
       CHECK(result == std::string::npos);
 
-      astd::string_view str("There are two needles in this haystack with needles.");
-      astd::string_view str2("needle");
+      std::string_view str("There are two needles in this haystack with needles.");
+      std::string_view str2("needle");
 
       // different member versions of find in the same order as above:
       std::size_t found = str.find(str2);
@@ -136,22 +136,22 @@ static void test_operation()
    }
 
    {
-      astd::string_view str("The sixth sick sheik's sixth sheep's sick.");
-      astd::string_view key("sixth");
+      std::string_view str("The sixth sick sheik's sixth sheep's sick.");
+      std::string_view key("sixth");
 
       std::size_t found = str.rfind(key);
       CHECK(found == 23);
    }
 
    {
-      astd::string_view str("/usr/bin/man");
+      std::string_view str("/usr/bin/man");
       auto found = str.find_last_of("/\\");
       CHECK(str.substr(0, found) == "/usr/bin");
       CHECK(str.substr(found + 1) == "man");
    }
 
    {
-      astd::string_view str("Please, replace the vowels in this sentence by asterisks.");
+      std::string_view str("Please, replace the vowels in this sentence by asterisks.");
       std::size_t found = str.find_first_of("aeiou");
       CHECK(found == 2);
    }

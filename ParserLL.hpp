@@ -9,7 +9,7 @@ namespace xts {
    class ParserLL
    {
    public:
-      ParserLL(astd::string_view buffer)
+      ParserLL(std::string_view buffer)
          : _index(0), _buffer(buffer)
       {}
 
@@ -33,7 +33,7 @@ namespace xts {
          return false;
       }
 
-      bool peek(astd::string_view s)
+      bool peek(std::string_view s)
       {
          unsigned int i = 0;
          while (i < s.size() && _index + i < _buffer.size() && _buffer[_index + i] == s[i])
@@ -43,7 +43,7 @@ namespace xts {
          return (i >= s.size());
       }
 
-      bool consume(astd::string_view s)
+      bool consume(std::string_view s)
       {
          if (peek(s))
          {
@@ -94,7 +94,7 @@ namespace xts {
          return false;
       }
 
-      bool ignoreUntil(astd::string_view p)
+      bool ignoreUntil(std::string_view p)
       {
          while (!peek(p))
          {
@@ -103,7 +103,7 @@ namespace xts {
          return consume(p);
       }
 
-	  bool parseintoSize(std::size_t num, astd::string_view& into)
+	  bool parseintoSize(std::size_t num, std::string_view& into)
 	  {
 		  bool result = _buffer.size() - _index >= num;
 		  if (result)
@@ -114,7 +114,7 @@ namespace xts {
 		  return result;
 	  }
 
-      bool parseintoUntil(astd::string_view limiter, astd::string_view& into)
+      bool parseintoUntil(std::string_view limiter, std::string_view& into)
       {
          int _index_tmp = _index;
          while (!peek(limiter))
@@ -152,7 +152,7 @@ namespace xts {
 
    protected:
       std::size_t _index;
-	  astd::string_view _buffer;
+	  std::string_view _buffer;
    };
 
 }

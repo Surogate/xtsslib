@@ -39,7 +39,7 @@ static astd::basic_string_view<CHAR_T> trim(astd::basic_string_view<CHAR_T> str,
    return str;
 }
 
-static astd::string_view trim(astd::string_view str)
+static std::string_view trim(std::string_view str)
 {
    return trim<char>(str);
 }

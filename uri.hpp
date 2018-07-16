@@ -1,7 +1,7 @@
 #ifndef URL_HPP
 #define URL_HPP
 
-#include "astring_view.hpp"
+#include <string_view>
 #include <algorithm>
 #include <iostream>
 #include <string>
@@ -15,7 +15,7 @@ class basic_uri_tokenizer
 {
 public:
    typedef std::basic_string<CHAR_CONTAINER> string_type;
-   typedef astd::basic_string_view<CHAR_CONTAINER> string_view_type;
+   typedef std::basic_string_view<CHAR_CONTAINER> string_view_type;
    typedef std::vector<string_view_type> cutted_vector_type;
    typedef string_view_type value_type;
    typedef string_view_type* pointer;
@@ -82,7 +82,7 @@ template <typename CHAR_CONTAINER> class basic_uri
 {
    public:
    typedef std::basic_string<CHAR_CONTAINER> string_type;
-   typedef astd::basic_string_view<CHAR_CONTAINER> string_view_type;
+   typedef std::basic_string_view<CHAR_CONTAINER> string_view_type;
    typedef basic_uri_tokenizer<CHAR_CONTAINER, '/'> path_tokenizer;
    typedef basic_uri_tokenizer<CHAR_CONTAINER, '?'> query_tokenizer;
    typedef basic_uri_tokenizer<CHAR_CONTAINER, '#'> fragment_tokenizer;
