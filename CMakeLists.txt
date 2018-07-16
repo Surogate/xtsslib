@@ -18,8 +18,10 @@ include_directories("${PROJECT_SOURCE_DIR}/fixed-container/include")
 if (WIN32)
 add_compile_options(/permissive-)
 add_definitions(/DCATCH_CPP14_OR_GREATER)
+add_compile_options(/std:c++17)
 else (WIN32)
 add_definitions(-DCATCH_CPP14_OR_GREATER)
+add_definitions(-std=c++17)
 endif(WIN32)
 
 # sources in the resolver_server directory
