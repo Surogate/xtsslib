@@ -98,9 +98,9 @@ static void test_operation()
 
    {
       std::vector<char> str;
-      str.resize(5);
-      v.copy(str.data(), 0, 5);
-      std::equal(str.begin(), str.end(), "Hello");
+      str.resize(6);
+      v.copy(str.data(), 5, 0);
+      CHECK(std::equal(str.begin(), str.end(), "Hello"));
    }
 
    {
