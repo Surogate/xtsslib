@@ -70,10 +70,13 @@ namespace xts
          ec = run_process(filename, argv, envp);
       }
 
-      bool join() const
+      bool join() 
       {
          int status;
-         return ::waitpid(cpid, &status, 0) >= 0;
+         bool result = ::waitpid(cpid, &status, 0) >= 0;
+         if(result)
+            atached = false;
+         return result;
       }
 
       bool kill() const
@@ -85,6 +88,11 @@ namespace xts
       {
          attached = false;
       }
+
+	  int pid() const
+      {
+		 return cpid;
+	  }
 
       ~linux_process()
       {

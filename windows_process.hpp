@@ -50,7 +50,12 @@ namespace xts
          std::cout << command_line << std::endl;
 #endif
 
-         auto result = ::CreateProcessA(NULL, command_line.data(), NULL, NULL, TRUE, NULL, env_block.data(), running_dir.data(), &si, &pi);
+		 char* env_block_data = nullptr;
+         if(envp.size())
+            env_block_data = env_block.data();
+
+         auto result = ::CreateProcessA(NULL, command_line.data(), NULL, NULL,
+             TRUE, NULL, env_block_data, running_dir.data(), &si, &pi);
          if (result > 0)
          {
             attached = true;
@@ -79,10 +84,16 @@ namespace xts
          ec = run_process(filename, argv, envp);
       }
 
-      bool join() const
+      bool join()
       {
-         if (pi.hProcess)
-            return ::WaitForSingleObject(pi.hProcess, std::numeric_limits<DWORD>::max()) != WAIT_FAILED;
+         if(pi.hProcess)
+         {
+            bool result = ::WaitForSingleObject(
+                       pi.hProcess, std::numeric_limits<DWORD>::max())
+                != WAIT_FAILED; 
+			if(result)
+               attached = false;
+		 }
          return false;
       }
 
@@ -97,6 +108,11 @@ namespace xts
       {
          attached = false;
       }
+
+	  DWORD pid() const
+	  { 
+		  return pi.dwProcessId;
+	  }
 
       ~windows_process()
       {
